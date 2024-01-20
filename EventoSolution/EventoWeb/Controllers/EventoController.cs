@@ -1,4 +1,4 @@
-﻿using EventoApi.Interfaces;
+﻿using EventoCore.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;

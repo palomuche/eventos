@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34511.84
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventoWeb", "EventoWeb\EventoWeb.csproj", "{B0E26ADC-6978-4D1E-B993-5E7A3DE68D4A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventoApi", "EventoApi\EventoApi.csproj", "{E14C817E-5A8C-4CB0-B012-2472E898EB52}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventoCore", "EventoCore\EventoCore.csproj", "{0B30CE11-202C-4AF0-843D-53D3CF4C0A25}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B0E26ADC-6978-4D1E-B993-5E7A3DE68D4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0E26ADC-6978-4D1E-B993-5E7A3DE68D4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0E26ADC-6978-4D1E-B993-5E7A3DE68D4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0E26ADC-6978-4D1E-B993-5E7A3DE68D4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E14C817E-5A8C-4CB0-B012-2472E898EB52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E14C817E-5A8C-4CB0-B012-2472E898EB52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E14C817E-5A8C-4CB0-B012-2472E898EB52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E14C817E-5A8C-4CB0-B012-2472E898EB52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B30CE11-202C-4AF0-843D-53D3CF4C0A25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B30CE11-202C-4AF0-843D-53D3CF4C0A25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B30CE11-202C-4AF0-843D-53D3CF4C0A25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B30CE11-202C-4AF0-843D-53D3CF4C0A25}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {50EA15B7-FC65-4755-BFFB-29A8323C6E2C}
+	EndGlobalSection
+EndGlobal

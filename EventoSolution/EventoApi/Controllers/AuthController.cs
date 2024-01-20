@@ -1,5 +1,5 @@
-﻿using EventoApi.Models;
-using EventoApi.ViewModels;
+﻿using EventoCore.Entities;
+using EventoCore.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -13,12 +13,12 @@ namespace EventoApi.Controllers
     [Route("api/conta")]
     public class AuthController : ControllerBase
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<Usuario> _signInManager;
+        private readonly UserManager<Usuario> _userManager;
         private readonly JwtSettings _jwtSettings;
 
-        public AuthController(SignInManager<IdentityUser> signInManager, 
-                              UserManager<IdentityUser> userManager, 
+        public AuthController(SignInManager<Usuario> signInManager,
+                              UserManager<Usuario> userManager,
                               IOptions<JwtSettings> jwtSettings)
         {
             _signInManager = signInManager;
@@ -31,16 +31,16 @@ namespace EventoApi.Controllers
         {
             if (!ModelState.IsValid) return ValidationProblem(ModelState);
 
-            var user = new IdentityUser
+            var user = new Usuario
             {
-                UserName = registerUser.Email, 
-                Email = registerUser.Email, 
+                UserName = registerUser.Email,
+                Email = registerUser.Email,
                 EmailConfirmed = true
             };
 
             var result = await _userManager.CreateAsync(user, registerUser.Password);
 
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, false);
                 //return Ok(await GerarJwt(user.Email));
@@ -52,20 +52,23 @@ namespace EventoApi.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult> Login(LoginUserViewModel loginUser)
+        public async Task<ActionResult> Login([FromBody] AutenticacaoViewModel loginUser)
         {
             if (!ModelState.IsValid) return ValidationProblem(ModelState);
 
-            var result = await _signInManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, false, true);
+            var user = _userManager.FindByNameAsync(loginUser.Login).Result;
+            if (user == null) throw new Exception("Usuário ou senha incorretos");
 
-            if(result.Succeeded)
+            var result = _signInManager.PasswordSignInAsync(user.UserName, loginUser.Senha, false, lockoutOnFailure: false).Result;
+
+            if (result.Succeeded)
             {
-                return Ok(GerarJwt());
+                return Ok(new UsuarioLogadoViewModel { Token = GerarJwt(), UsuarioId = user.Id, UsuarioNome = user.Nome, Sucesso = true});
             }
 
             return Problem("Usuário ou senha incorretos");
         }
-        
+
         private string GerarJwt()
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -76,7 +79,7 @@ namespace EventoApi.Controllers
                 Issuer = _jwtSettings.Emissor,
                 Audience = _jwtSettings.Audiencia,
                 Expires = DateTime.UtcNow.AddHours(_jwtSettings.ExpiracaoHoras),
-                SigningCredentials = new SigningCredentials( new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             });
 
             var encodedToken = tokenHandler.WriteToken(token);

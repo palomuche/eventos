@@ -1,14 +1,9 @@
-﻿using EventoApi.Interfaces;
-using EventoApi.Models;
-using EventoApi.ViewModels;
-using EventoWeb.ViewModels;
+﻿using EventoCore.Entities;
+using EventoCore.Interfaces;
+using EventoCore.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EventoWeb.Controllers
 {
@@ -54,32 +49,29 @@ namespace EventoWeb.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var user = _userManager.FindByNameAsync(model.Login).Result;
-                    if (user == null) throw new Exception("Usuário não encontrado");
-
-                    var result = _signManager.PasswordSignInAsync(user.UserName, model.Senha, model.Lembrar, lockoutOnFailure: false).Result;
-
-                    if (result.Succeeded)
+                    var retorno = _usuarioRepository.RealizaLogin(model);
+                    if (retorno.Sucesso)
                     {
                         return new RetornoViewModel
                         {
-                            Sucesso = true
+                            Sucesso = true,
+                            Mensagem = retorno.Token
                         };
                     }
                     else
                     {
-                        throw new Exception("Senha inválida");
+                        throw new Exception();
                     }
                 }
 
-                throw new Exception("Falha no login");
+                throw new Exception();
             }
             catch (Exception e)
             {
                 return new RetornoViewModel
                 {
                     Sucesso = false,
-                    Mensagem = e.Message
+                    Mensagem = "Usuário ou senha incorretos"
                 };
             }
         }

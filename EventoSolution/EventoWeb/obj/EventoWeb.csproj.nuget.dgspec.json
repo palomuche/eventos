@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Paulinho\\Git\\Eventos\\EventoSolution\\EventoWeb\\EventoWeb.csproj": {}
+    "C:\\Paulinho\\Teste\\Agenda\\EventoSolution\\EventoWeb\\EventoWeb.csproj": {}
   },
   "projects": {
-    "C:\\Paulinho\\Git\\Eventos\\EventoSolution\\EventoApi\\EventoApi.csproj": {
+    "C:\\Paulinho\\Teste\\Agenda\\EventoSolution\\EventoCore\\EventoCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Paulinho\\Git\\Eventos\\EventoSolution\\EventoApi\\EventoApi.csproj",
-        "projectName": "EventoApi",
-        "projectPath": "C:\\Paulinho\\Git\\Eventos\\EventoSolution\\EventoApi\\EventoApi.csproj",
+        "projectUniqueName": "C:\\Paulinho\\Teste\\Agenda\\EventoSolution\\EventoCore\\EventoCore.csproj",
+        "projectName": "EventoCore",
+        "projectPath": "C:\\Paulinho\\Teste\\Agenda\\EventoSolution\\EventoCore\\EventoCore.csproj",
         "packagesPath": "C:\\Users\\pauli\\.nuget\\packages\\",
-        "outputPath": "C:\\Paulinho\\Git\\Eventos\\EventoSolution\\EventoApi\\obj\\",
+        "outputPath": "C:\\Paulinho\\Teste\\Agenda\\EventoSolution\\EventoCore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\pauli\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -70,7 +70,7 @@
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.4.0, )"
+              "version": "[6.5.0, )"
             }
           },
           "imports": [
@@ -96,14 +96,14 @@
         }
       }
     },
-    "C:\\Paulinho\\Git\\Eventos\\EventoSolution\\EventoWeb\\EventoWeb.csproj": {
+    "C:\\Paulinho\\Teste\\Agenda\\EventoSolution\\EventoWeb\\EventoWeb.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Paulinho\\Git\\Eventos\\EventoSolution\\EventoWeb\\EventoWeb.csproj",
+        "projectUniqueName": "C:\\Paulinho\\Teste\\Agenda\\EventoSolution\\EventoWeb\\EventoWeb.csproj",
         "projectName": "EventoWeb",
-        "projectPath": "C:\\Paulinho\\Git\\Eventos\\EventoSolution\\EventoWeb\\EventoWeb.csproj",
+        "projectPath": "C:\\Paulinho\\Teste\\Agenda\\EventoSolution\\EventoWeb\\EventoWeb.csproj",
         "packagesPath": "C:\\Users\\pauli\\.nuget\\packages\\",
-        "outputPath": "C:\\Paulinho\\Git\\Eventos\\EventoSolution\\EventoWeb\\obj\\",
+        "outputPath": "C:\\Paulinho\\Teste\\Agenda\\EventoSolution\\EventoWeb\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\pauli\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -120,8 +120,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Paulinho\\Git\\Eventos\\EventoSolution\\EventoApi\\EventoApi.csproj": {
-                "projectPath": "C:\\Paulinho\\Git\\Eventos\\EventoSolution\\EventoApi\\EventoApi.csproj"
+              "C:\\Paulinho\\Teste\\Agenda\\EventoSolution\\EventoCore\\EventoCore.csproj": {
+                "projectPath": "C:\\Paulinho\\Teste\\Agenda\\EventoSolution\\EventoCore\\EventoCore.csproj"
               }
             }
           }
@@ -135,6 +135,40 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

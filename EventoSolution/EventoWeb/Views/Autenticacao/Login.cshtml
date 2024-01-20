@@ -172,7 +172,7 @@
                      <p class="left3"> <span><u>Esqueci minha senha</u></span> </p>
 
                 </div>
-                <div class="imagem-grande"><img  class="imagem-grande" src="~/img/BG_FUCINHOS.png" /></div>
+                <div class="imagem-grande"><img  class="imagem-grande" src="~/img/BG_SISTEMA.png" /></div>
             </div>
 
 
@@ -205,11 +205,12 @@
                     Lembrar: lembrar,
                 },
                 success: function (data) {
-                    if (data.Sucesso) {
+                    if (data.sucesso) {
+                        localStorage.setItem("token", data.mensagem);
                         window.location.href = '@(Url.Action("Index", "Home"))';
                     }
                     else {
-                        $("#erro").html(data.Mensagem);
+                        $("#erro").html(data.mensagem);
                         $("#erro").removeClass("d-none");
                     }
                 },

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EventoWeb")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bd1bfabcca7e13d6d7120dc7fb15e2e6ae718bdc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("EventoWeb")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EventoWeb")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

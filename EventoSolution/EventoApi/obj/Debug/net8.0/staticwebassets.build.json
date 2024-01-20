@@ -1,11 +1,23 @@
 {
   "Version": 1,
-  "Hash": "b8QNOfDnG5pN0xkl4YeIak/0pw8E/Epplry8Nilguvc=",
+  "Hash": "MVKCLUo3Zy9n24oaxf9eVIrF4WP4Tz2wACduTRqsj8U=",
   "Source": "EventoApi",
   "BasePath": "_content/EventoApi",
   "Mode": "Default",
   "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [],
+  "ReferencedProjectsConfiguration": [
+    {
+      "Identity": "C:\\Paulinho\\Teste\\Agenda\\EventoSolution\\EventoCore\\EventoCore.csproj",
+      "Version": 2,
+      "Source": "EventoCore",
+      "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",
+      "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework",
+      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
+      "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework"
+    }
+  ],
   "DiscoveryPatterns": [],
   "Assets": []
 }

@@ -1,5 +1,6 @@
-using EventoApi.Data;
-using EventoApi.Models;
+using EventoCore.Context;
+using EventoCore.Entities;
+using EventoCore.ViewModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -55,10 +56,6 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
 builder.Services.AddIdentity<Usuario, IdentityRole<Guid>>()
     .AddEntityFrameworkStores<ApplicationContext>()
     .AddDefaultTokenProviders();
-
-//builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-//                .AddRoles<IdentityRole>()
-//                .AddEntityFrameworkStores<ApplicationContext>();
 
 var jwtSettingsSection = builder.Configuration.GetSection("JwtSettings");
 builder.Services.Configure<JwtSettings>(jwtSettingsSection);

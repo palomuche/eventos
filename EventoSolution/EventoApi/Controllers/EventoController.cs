@@ -1,9 +1,9 @@
-using EventoApi.Data;
-using EventoApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
+using EventoCore.Context;
+using EventoCore.Entities;
 
 namespace EventoApi.Controllers
 {
@@ -34,7 +34,7 @@ namespace EventoApi.Controllers
         {
             var evento = await _context.Eventos.FindAsync(id);
 
-            if(evento == null) return NotFound();
+            if (evento == null) return NotFound();
 
             return evento;
         }
@@ -44,7 +44,7 @@ namespace EventoApi.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult<Evento>> PostEvento(Evento evento)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 //return BadRequest(ModelState);
                 //return ValidationProblem(ModelState);
@@ -58,7 +58,7 @@ namespace EventoApi.Controllers
             _context.Eventos.Add(evento);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetEvento), new { Id = evento.Id }, evento);
+            return CreatedAtAction(nameof(GetEvento), new { evento.Id }, evento);
         }
 
         [HttpPut]
@@ -66,17 +66,17 @@ namespace EventoApi.Controllers
         [ProducesDefaultResponseType]
         public async Task<IActionResult> PutEvento(Guid id, Evento evento)
         {
-            if(id != evento.Id) return BadRequest();
+            if (id != evento.Id) return BadRequest();
             if (!ModelState.IsValid) return ValidationProblem(ModelState);
 
             //_context.Eventos.Update(evento);  
-            _context.Entry(evento).State = EntityState.Modified; 
-            
+            _context.Entry(evento).State = EntityState.Modified;
+
             try
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException) 
+            catch (DbUpdateConcurrencyException)
             {
                 if (!EventoExists(id))
                 {
@@ -96,11 +96,11 @@ namespace EventoApi.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> DeleteEvento(Guid id)
+        public async Task<IActionResult> DeleteEvento(int id)
         {
             var evento = await _context.Eventos.FindAsync(id);
 
-            if(evento == null) return NotFound();
+            if (evento == null) return NotFound();
 
             _context.Eventos.Remove(evento);
             await _context.SaveChangesAsync();
@@ -112,5 +112,6 @@ namespace EventoApi.Controllers
         {
             return (_context.Eventos?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
     }
 }

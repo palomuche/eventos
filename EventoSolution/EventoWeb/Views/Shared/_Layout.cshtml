@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Focinhus</title>
+    <title>@ViewData["Title"] - Sistema</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/lib/icones/fontawesome/css/all.min.css" rel="stylesheet" />
@@ -99,27 +99,6 @@
 
 </head>
 <body>
-    @*<header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                <div class="container">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Hackathon.Console</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>*@
     <div class="grid-principal">
         <div class="menu-lateral">
             <div class="sidebar">
@@ -129,37 +108,21 @@
                     </div>
                     <a href="@(Url.Action("Index", "Home"))">
                         <div class="lista-menu-lateral @((string)ViewBag.Title == "Home" ? Html.Raw("title-ativo") : Html.Raw(""))">
-                            <img style="height:3rem;opacity:0.6" src="~/img/ICON_DASH.svg" />
                             <div>Dashboard</div>
                         </div>
                     </a>
-                    <a href="@(Url.Action("Index", "Animal"))">
-                        <div class="lista-menu-lateral @((string)ViewBag.Title == "Pets" ? Html.Raw("title-ativo") : Html.Raw(""))">
-                            <img style="height:3rem" src="~/img/ICON_PET_PATA.svg" />
-                            <div>Pets</div>
+                    <a href="@(Url.Action("Index", "Evento"))">
+                        <div class="lista-menu-lateral @((string)ViewBag.Title == "Eventos" ? Html.Raw("title-ativo") : Html.Raw(""))">
+                            <div>Eventos</div>
                         </div>
                     </a>
-                    <div class="lista-menu-lateral @((string)ViewBag.Title == "Doações" ? Html.Raw("title-ativo") : Html.Raw(""))">
-                        <img style="height:3rem" src="~/img/ICON_OSSO.svg" />
-                        <div>Doações</div>
-                    </div>
-                    <a href="@(Url.Action("Index", "Adocao"))">
-                        <div class="lista-menu-lateral @((string)ViewBag.Title == "Adoções" ? Html.Raw("title-ativo") : Html.Raw(""))">
-                            <img style="height:3rem" src="~/img/adocao_icon.svg" />
-                            <div>Adoções</div>
-                        </div>
-                    </a>
-                    <div class="lista-menu-lateral @((string)ViewBag.Title == "Configurações" ? Html.Raw("title-ativo") : Html.Raw(""))">
-                        <img style="height:3rem" src="~/img/ICON_CONFIG.svg" />
-                        <div>Configurações</div>
-                    </div>
                 </div>
                 <div>
                     <div class="lista-menu-lateral">
-                        <img style="height:3rem" src="~/img/FOTO_LIVIA.png" />
+                        <img style="height:3rem" src="~/img/FOTO_USUARIO.png" />
                         <div style="font-size: 15px; color: #FB9066">
-                            <p><b>Lívia Maria</b><button class="btn-danger" style="border-radius: 15px; margin-left:1rem" type="submit" onclick="sairSistema()">Sair</button></p>
-                            <p>Patinhas para adoção</p>
+                            <p><b>Meu Usuário</b><button class="btn-danger" style="border-radius: 15px; margin-left:1rem" type="submit" onclick="sairSistema()">Sair</button></p>
+                            <p>Texto do Usuário</p>
                         </div>
                     </div>
                 </div>
