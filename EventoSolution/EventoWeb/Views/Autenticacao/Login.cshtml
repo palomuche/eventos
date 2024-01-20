@@ -1,0 +1,227 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Sistema Focinhus</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap-notify.js" asp-append-version="true"></script>
+
+    <style>
+        .componenteLogar{
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box {
+            width: 100%;
+            border-radius: 30px;
+            height: 100%;
+            background: #f9f9f9;
+        }
+        body {
+        margin: 0px;
+        }
+        .TextoEntrar{
+            color: #156064;
+            font: bold 40px arial, verdana, helvetica, sans-serif;
+        }
+        .margin{
+            display: flex;
+           padding: 0px 2rem 0px 2rem;
+        }
+
+    .top1{
+         margin-top: 1rem
+    }
+
+    .left{
+         margin-left: 2rem
+    }
+
+    
+    .left2{
+         margin-left: 5rem
+    }
+
+    .left3{
+         margin-left: 6.5rem
+    }
+
+    .margin{
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+
+    }
+
+    .input input{
+        border-top: transparent;
+        width: 270px;
+        height: 1.5rem;
+        background-color: #f9f9f9;
+        padding: 3px;
+        border-bottom: 1px solid #156064;
+        border-left: transparent;
+        border-right: transparent;
+    }
+    .button-logar{
+    background-color: #156064;
+    width: 125px;
+    height: 30px;
+    color: white;
+    border-radius: 30px;
+    border: transparent;
+    }
+    .div{
+        display: flex;
+    }
+    .img-logar{
+        width: 100%;
+        margin-top: 4rem;
+    }
+    .pading{
+        padding-top: 5rem
+    }
+    .imagem-grande{
+        width: 79%;
+        display: flex;
+        justify-content: right;
+    }
+
+
+        /*ESTILIZAÇÃO CHECKBOX*/
+
+        input[type=checkbox] {
+          position: relative;
+          cursor: pointer;
+        }
+
+        input[type=checkbox]:before {
+          content: "";
+          display: block;
+          position: absolute;
+          font: bold 40px arial, verdana, helvetica, sans-serif;
+          width: 25px;
+          height: 25px;
+          top: 0;
+          left: 0;
+          background-color: #F8E16C;
+        }
+
+        input[type=checkbox]:checked:after {
+          content: "";
+          display: block;
+          width: 5px;
+          height: 10px;
+          border: solid white;
+          border-width: 0 3px 3px 0;
+          -webkit-transform: rotate(45deg);
+          -ms-transform: rotate(45deg);
+          transform: rotate(45deg);
+          position: absolute;
+          top: 5px;
+          left: 9px;
+        }
+        span{
+          margin: 5px 15px 0px 15px;
+          font: bold 11px arial, verdana, helvetica, sans-serif;
+          color: #156064;
+        }
+        #erro {
+            text-align: center;
+            background-color: red;
+            white-space: normal;
+            color: white;
+            border-radius: 8px;
+            margin-top: 1rem;
+            margin-left: 2rem;
+        }
+     </style>
+
+</head>
+<body>
+  
+
+        <div class="div">
+        <div class="box">
+            <div class="div">
+                <div class="pading">
+                    <div class="TextoEntrar margin top"><img  class="img-logar" src="~/img/LOGO_TOP.png" /></div>
+                    <div id="erro" class="d-none"></div>
+                    <div class="margin input top"><input id="inputLogin" type="text" placeholder="Digite o username"></div>
+                    <div class="margin input top"><input id="inputSenha" type="password"  placeholder="Digite a senha"></div>
+
+                    <p class="left"> <input id="checkLembrar" type="checkbox"> <span>Lembrar de mim</span> </p>
+
+                    <div class="margin left2 top"><button class="button-logar" type="submit" onclick="realizaLogin()">ENTRAR</button></div>
+                    <div class="margin  left2 top1"><button class="button-logar" type="submit">CADASTRAR</button></div>
+
+
+                     <p class="left3"> <span><u>Esqueci minha senha</u></span> </p>
+
+                </div>
+                <div class="imagem-grande"><img  class="imagem-grande" src="~/img/BG_FUCINHOS.png" /></div>
+            </div>
+
+
+             
+        </div>
+
+    </div>
+ 
+
+    <script>
+
+        function realizaLogin() {
+            const login = $("#inputLogin").val();
+            const senha = $("#inputSenha").val();
+            const lembrar = $("#checkLembrar")[0].checked;
+
+            if (login == '' || senha == '') {
+                $("#erro").html("Preencha o Login e Senha para continuar");
+                $("#erro").removeClass("d-none");
+                return;
+            }
+            $("#erro").addClass("d-none");
+
+            $.ajax({
+                url: '@(Url.Action("RealizaLogin", "Autenticacao"))',
+                method: 'POST',
+                data: {
+                    Login: login,
+                    Senha: senha,
+                    Lembrar: lembrar,
+                },
+                success: function (data) {
+                    if (data.Sucesso) {
+                        window.location.href = '@(Url.Action("Index", "Home"))';
+                    }
+                    else {
+                        $("#erro").html(data.Mensagem);
+                        $("#erro").removeClass("d-none");
+                    }
+                },
+                error: function (data) {
+                    $("#erro").html("Ocorreu um erro ao autenticar");
+                    $("#erro").removeClass("d-none");
+                },
+            });
+        }
+
+    </script>
+</body>
+
+
+</html>

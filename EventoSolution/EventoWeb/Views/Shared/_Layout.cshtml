@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Focinhus</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/lib/icones/fontawesome/css/all.min.css" rel="stylesheet" />
+    <link href="~/lib/icones/fontawesome/css/v4-shims.min.css" rel="stylesheet" />
+    <link href="~/lib/icones/icofont/icofont.min.css" rel="stylesheet" />
+    <link href="~/lib/icones/themify-icons/themify-icons.css" rel="stylesheet" />
+    <link href="~/lib/icones/material-design-iconic-font/css/material-design-iconic-font.min.css" rel="stylesheet" />
+    <link href="~/lib/icones/material-design-iconic-font/css/materialdesignicons.min.css" rel="stylesheet" />
+    <link href="~/lib/icones/icofont/icofont.min.css" rel="stylesheet" />
+    <link href="~/lib/icones/simple-line/simple-line-icons.css" rel="stylesheet" />
+    <link href="~/lib/icones/fontello/css/fontello.css" rel="stylesheet" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <style>
+
+        body {
+            margin: 0 !important;
+        }
+
+        .grid-principal {
+            transition: all 1.0s ease;
+            display: grid;
+            grid-template-rows: 50px 1fr;
+            grid-template-columns: 73px 1fr;
+            grid-template-areas:
+                "menu-lateral conteudo"
+                "menu-lateral conteudo"
+                "menu-lateral conteudo";
+            height: 100%;
+        }
+
+        .conteudo {
+            grid-area: conteudo;
+            width: 100%;
+            overflow-y:auto;
+            max-height:100vh;
+        }
+
+        .menu-lateral {
+            grid-area: menu-lateral;
+            background-color: #F8E16C;
+            transition: all 2s ease-in-out;
+            height: 100%;
+            overflow: hidden;
+            padding-left: 0.5rem;
+        }
+
+        .sidebar {
+            height: 100vh;
+            padding-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding-bottom: 1rem;
+        }
+
+        .sidebar ul li .tooltip {
+            left: 85px !important;
+            background-color: var(--branco);
+        }
+
+        .sidebar.active .profile_content .profile {
+            background-color: var(--azul-gama);
+        }
+
+        .toggle-menu {
+            grid-template-columns: 240px 1fr !important;
+        }
+
+        .lista-menu-lateral {
+            cursor: pointer;
+            display: flex;
+            margin-top: 1rem;
+            color: white;
+            font-size: 1.5rem;
+            align-items: center;
+            justify-content: left;
+            width:13rem;
+        }
+
+        .lista-menu-lateral > div {
+            margin-left:1rem;
+        }
+
+        .title-ativo {
+            border-left: 5px solid #FFC2B4;
+        }
+
+    </style>
+
+</head>
+<body>
+    @*<header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Hackathon.Console</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>*@
+    <div class="grid-principal">
+        <div class="menu-lateral">
+            <div class="sidebar">
+                <div>
+                    <div style="cursor:pointer;padding-left:0.3rem" id="btn">
+                        <img style="height:3rem" src="~/img/LOGO_TOP.png" />
+                    </div>
+                    <a href="@(Url.Action("Index", "Home"))">
+                        <div class="lista-menu-lateral @((string)ViewBag.Title == "Home" ? Html.Raw("title-ativo") : Html.Raw(""))">
+                            <img style="height:3rem;opacity:0.6" src="~/img/ICON_DASH.svg" />
+                            <div>Dashboard</div>
+                        </div>
+                    </a>
+                    <a href="@(Url.Action("Index", "Animal"))">
+                        <div class="lista-menu-lateral @((string)ViewBag.Title == "Pets" ? Html.Raw("title-ativo") : Html.Raw(""))">
+                            <img style="height:3rem" src="~/img/ICON_PET_PATA.svg" />
+                            <div>Pets</div>
+                        </div>
+                    </a>
+                    <div class="lista-menu-lateral @((string)ViewBag.Title == "Doações" ? Html.Raw("title-ativo") : Html.Raw(""))">
+                        <img style="height:3rem" src="~/img/ICON_OSSO.svg" />
+                        <div>Doações</div>
+                    </div>
+                    <a href="@(Url.Action("Index", "Adocao"))">
+                        <div class="lista-menu-lateral @((string)ViewBag.Title == "Adoções" ? Html.Raw("title-ativo") : Html.Raw(""))">
+                            <img style="height:3rem" src="~/img/adocao_icon.svg" />
+                            <div>Adoções</div>
+                        </div>
+                    </a>
+                    <div class="lista-menu-lateral @((string)ViewBag.Title == "Configurações" ? Html.Raw("title-ativo") : Html.Raw(""))">
+                        <img style="height:3rem" src="~/img/ICON_CONFIG.svg" />
+                        <div>Configurações</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="lista-menu-lateral">
+                        <img style="height:3rem" src="~/img/FOTO_LIVIA.png" />
+                        <div style="font-size: 15px; color: #FB9066">
+                            <p><b>Lívia Maria</b><button class="btn-danger" style="border-radius: 15px; margin-left:1rem" type="submit" onclick="sairSistema()">Sair</button></p>
+                            <p>Patinhas para adoção</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="conteudo">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <script>
+        btn.onclick = function () {
+            let sidebar = document.querySelector(".sidebar");
+            sidebar.classList.toggle("active");
+
+            $(".grid-principal").toggleClass("toggle-menu")
+        }
+
+        function sairSistema() {
+            window.location.href = '@(Url.Action("Sair", "Autenticacao"))';
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+﻿@{
+    ViewData["Title"] = "Eventos";
+    var eventos = (IEnumerable<Evento>)ViewBag.Eventos;
+}
+
+<style>
+
+    body {
+        background-color: #F9F9F9;
+        margin: 0px;
+    }
+
+    .titulo {
+        color: #156064;
+        width: 80%;
+        font: bold 20px arial, verdana, helvetica, sans-serif;
+    }
+
+    .titulo-componentes {
+        color: #156064;
+        font: bold 16px arial, verdana, helvetica, sans-serif;
+        padding: 1rem 0rem 1rem 1rem;
+        width: 100%;
+    }
+
+    .flex {
+        display: flex;
+        column-gap: 1rem;
+    }
+
+    .breadcrumb {
+        color: #156064;
+        background-color: transparent !important;
+        font: bold 12px arial, verdana, helvetica, sans-serif;
+    }
+
+    .estrutura {
+        padding: 1rem
+    }
+
+    .container {
+        max-width: 1500px !important;
+    }
+
+    .componente {
+        background-color: white;
+        width: 100%;
+        height: fit-content;
+        border-radius: 15px;
+        padding: 1rem
+    }
+
+    .header-tabela {
+        background-color: #F3F3F3;
+        width: 100%;
+        height: fit-content;
+        border-radius: 15px 15px 0 0;
+        padding: 1rem
+    }
+
+    .input input {
+        border: transparent;
+        width: 270px;
+        height: 2rem;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+        background-color: #f9f9f9;
+        padding: 3px;
+    }
+
+    .flax-r {
+        display: flex;
+        justify-content: right;
+        width: 100%
+    }
+
+    .button-logar {
+        border-radius: 15px;
+        border: 1px solid #156064;
+        background-color: #156064;
+        color: white;
+        width: 10rem;
+    }
+
+    .Conteudo-tabela {
+        background-color: #F9F9F9;
+    }
+
+    table {
+        width: 100%
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    td, th {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+        color: #707070;
+        font-family: Proxima Nova;
+    }
+
+</style>
+
+<div class="componenteLogar">
+    <div class="flex estrutura">
+        <div class="titulo">EVENTOS </div>
+        <div class="flax-r">
+            <div class="breadcrumb-cop">Lívia Maria </div>
+        </div>
+    </div>
+
+    <div class="estrutura">
+        <div class="flex">
+            <div class="componente">
+                <div class="flex estrutura">
+                    <div class="input"><input id="inputSenha" type="password" placeholder="Procure"></div>
+                    <div class="flax-r"><button class="button-logar" type="submit">CADASTRAR</button></div>
+                </div>
+
+                <table>
+                    <tr>
+                        <th>Título</th>
+                        <th>Descrição</th>
+                        <th>Dt. Início</th>
+                        <th>Dt. Fim</th>
+                    </tr>
+
+                    @foreach (var a in eventos)
+                    {
+                        <tr>
+                            <td>@a.Titulo</td>
+                            <td>@a.Descricao</td>
+                            <td>@a.Inicio.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@a.Fim.ToString("dd/MM/yyyy HH:mm")</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

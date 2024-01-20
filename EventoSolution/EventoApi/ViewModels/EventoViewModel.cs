@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EventoApi.Model
+namespace EventoApi.ViewModels
 {
     public class EventoViewModel
     {
