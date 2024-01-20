@@ -52,9 +52,13 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationContext>();
+builder.Services.AddIdentity<Usuario, IdentityRole<Guid>>()
+    .AddEntityFrameworkStores<ApplicationContext>()
+    .AddDefaultTokenProviders();
+
+//builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+//                .AddRoles<IdentityRole>()
+//                .AddEntityFrameworkStores<ApplicationContext>();
 
 var jwtSettingsSection = builder.Configuration.GetSection("JwtSettings");
 builder.Services.Configure<JwtSettings>(jwtSettingsSection);
