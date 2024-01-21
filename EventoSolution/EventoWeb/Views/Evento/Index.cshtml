@@ -116,7 +116,7 @@
         <div class="flex">
             <div class="componente">
                 <div class="flex estrutura">
-                    <div class="flax-r"><button class="button-logar" type="submit">CADASTRAR</button></div>
+                    <div class="flax-r"><button class="button-logar" type="submit" onclick="cadastro()">CADASTRAR</button></div>
                 </div>
 
                 <table>
@@ -141,3 +141,12 @@
         </div>
     </div>
 </div>
+
+<script>
+
+
+    function cadastro() {
+        window.location.href = '@(Url.Action("Cadastro", "Evento"))';
+    }
+
+</script>

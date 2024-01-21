@@ -68,5 +68,43 @@ namespace EventoCore.Repositories
                 throw;
             }
         }
+
+        public UsuarioLogadoViewModel CadastrarUsuario(AutenticacaoViewModel model)
+        {
+            try
+            {
+                var url = $"{apiUrl}/api/conta/cadastro";
+
+                // Cria uma instância do HttpClient
+                using (var client = new HttpClient())
+                {
+                    // Serializa o objeto para JSON
+                    var json = JsonConvert.SerializeObject(model);
+
+                    // Cria um StringContent que contém o JSON
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    // Envia a requisição POST
+                    HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                    string responseBody = response.Content.ReadAsStringAsync().Result;
+
+                    // Verifica se deu erro
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        throw new Exception();
+                    }
+
+                    UsuarioLogadoViewModel retorno = JsonConvert.DeserializeObject<UsuarioLogadoViewModel>(responseBody);
+
+                    return retorno;
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
     }
 }

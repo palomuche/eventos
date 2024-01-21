@@ -1,0 +1,61 @@
+﻿
+
+    <div class="div">
+    <div class="box">
+        <div class="div">
+            <div class="pading">
+                <div class="TextoEntrar margin top"><img  class="img-logar" src="~/img/LOGO_TOP.png" /></div>
+                <div id="erro" class="d-none"></div>
+                <div class="margin input top"><input id="inputLogin" type="text" placeholder="Digite o username"></div>
+                <div class="margin input top"><input id="inputSenha" type="password"  placeholder="Digite a senha"></div>
+
+
+                <div class="margin  left2 top1"><button class="button-logar" type="submit" onclick="cadastrarEvento()">CADASTRAR</button></div>
+
+            </div>
+        </div>
+
+
+             
+    </div>
+
+</div>
+ 
+
+<script>
+
+    function cadastrarEvento() {
+        const login = $("#inputLogin").val();
+        const senha = $("#inputSenha").val();
+
+        if (login == '' || senha == '') {
+            $("#erro").html("Preencha o Login e Senha para continuar");
+            $("#erro").removeClass("d-none");
+            return;
+        }
+        $("#erro").addClass("d-none");
+
+        $.ajax({
+            url: '@(Url.Action("CadastrarEvento", "Evento"))',
+            method: 'POST',
+            data: {
+                Login: login,
+                Senha: senha,
+            },
+            success: function (data) {
+                if (data.sucesso) {
+                    window.location.href = '@(Url.Action("Index", "Home"))';
+                }
+                else {
+                    $("#erro").html(data.mensagem);
+                    $("#erro").removeClass("d-none");
+                }
+            },
+            error: function (data) {
+                $("#erro").html("Ocorreu um erro ao autenticar");
+                $("#erro").removeClass("d-none");
+            },
+        });
+    }
+
+</script>

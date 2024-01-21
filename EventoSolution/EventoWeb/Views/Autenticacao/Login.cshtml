@@ -165,7 +165,7 @@
 
 
                     <div class="margin left2 top"><button class="button-logar" type="submit" onclick="realizaLogin()">ENTRAR</button></div>
-                    <div class="margin  left2 top1"><button class="button-logar" type="submit">CADASTRAR</button></div>
+                    <div class="margin  left2 top1"><button class="button-logar" type="submit" onclick="cadastro()">CADASTRAR</button></div>
 
 
 
@@ -216,6 +216,9 @@
             });
         }
 
+        function cadastro() {
+            window.location.href = '@(Url.Action("Cadastro", "Autenticacao"))';
+        }
     </script>
 </body>
 

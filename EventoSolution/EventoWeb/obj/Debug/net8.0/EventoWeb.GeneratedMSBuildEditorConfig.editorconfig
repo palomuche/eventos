@@ -18,8 +18,16 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Paulinho\Git\Eventos\EventoSolution\EventoWeb
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Paulinho/Git/Eventos/EventoSolution/EventoWeb/Views/Autenticacao/Cadastro.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0ZW50aWNhY2FvXENhZGFzdHJvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Paulinho/Git/Eventos/EventoSolution/EventoWeb/Views/Autenticacao/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0ZW50aWNhY2FvXExvZ2luLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Paulinho/Git/Eventos/EventoSolution/EventoWeb/Views/Evento/Cadastro.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXZlbnRvXENhZGFzdHJvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Paulinho/Git/Eventos/EventoSolution/EventoWeb/Views/Evento/Index.cshtml]

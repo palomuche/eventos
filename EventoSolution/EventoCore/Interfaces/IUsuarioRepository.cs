@@ -11,5 +11,6 @@ namespace EventoCore.Interfaces
         IEnumerable<Usuario> GetAll();
         Usuario GetById(Guid id);
         UsuarioLogadoViewModel RealizaLogin(AutenticacaoViewModel model);
+        UsuarioLogadoViewModel CadastrarUsuario(AutenticacaoViewModel model);
     }
 }

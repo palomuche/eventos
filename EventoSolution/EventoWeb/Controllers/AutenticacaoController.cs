@@ -56,15 +56,26 @@ namespace EventoWeb.Controllers
                 {
                     var retorno = _usuarioRepository.RealizaLogin(model);
 
+
                     if (retorno.Sucesso)
                     {
+                        var cookieOptions = new CookieOptions
+                        {
+                            HttpOnly = true, // Importante por razões de segurança
+                            Secure = true, // Enviar apenas em HTTPS
+                        };
+                        Response.Cookies.Append("UserAuthToken", retorno.Token, cookieOptions);
+
                         var claims = new List<Claim>
                         {
                             new Claim(ClaimTypes.Name, model.Login)
                         };
 
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                        var authProperties = new AuthenticationProperties{};
+                        var authProperties = new AuthenticationProperties
+                        {
+                            // Configurações adicionais, como expiração do cookie
+                        };
 
                         HttpContext.SignInAsync(
                             CookieAuthenticationDefaults.AuthenticationScheme,
@@ -101,6 +112,21 @@ namespace EventoWeb.Controllers
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Autenticacao");
+        }
+
+        [AllowAnonymous]
+        public IActionResult Cadastro()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult CadastrarUsuario(AutenticacaoViewModel model)
+        {
+            _usuarioRepository.CadastrarUsuario(model);
+
+            return View();
         }
     }
 }
