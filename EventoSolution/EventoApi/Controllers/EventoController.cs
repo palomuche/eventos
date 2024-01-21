@@ -1,5 +1,6 @@
 using EventoCore.Context;
 using EventoCore.Entities;
+using EventoCore.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -44,7 +45,7 @@ namespace EventoApi.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult<IEnumerable<Evento>>> GetEventoByUsuario(Guid id)
         {
-            var eventos = await _context.Eventos.Where(w => !w.Excluido && (Guid)w.UsuarioInclusaoId == id).ToListAsync();
+            var eventos = await _context.Eventos.Where(w => !w.Excluido && w.UsuarioInclusaoId != null && (Guid)w.UsuarioInclusaoId == id).ToListAsync();
 
             if (eventos == null) return NotFound();
 
@@ -59,15 +60,20 @@ namespace EventoApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                //return BadRequest(ModelState);
-                //return ValidationProblem(ModelState);
-
                 return ValidationProblem(new ValidationProblemDetails(ModelState)
                 {
                     Title = "Um ou mais erros de validação ocorreram!",
                 });
             }
 
+            var validacao = ValidaEvento(evento);
+            if (!validacao.Sucesso)
+            {
+                return ValidationProblem(new ValidationProblemDetails(ModelState)
+                {
+                    Title = validacao.Mensagem,
+                });
+            }
             _context.Eventos.Add(evento);
             await _context.SaveChangesAsync();
 
@@ -82,7 +88,6 @@ namespace EventoApi.Controllers
             if (id != evento.Id) return BadRequest();
             if (!ModelState.IsValid) return ValidationProblem(ModelState);
 
-            //_context.Eventos.Update(evento);  
             _context.Entry(evento).State = EntityState.Modified;
 
             try
@@ -124,6 +129,47 @@ namespace EventoApi.Controllers
         private bool EventoExists(Guid id)
         {
             return (_context.Eventos?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        private RetornoViewModel ValidaEvento(Evento evento)
+        {
+            try
+            {
+                if (evento.Inicio > evento.Fim) throw(new Exception("A data de fim deve ser maior que a de início!"));
+
+                if(evento.UsuarioInclusaoId != null)
+                {
+                    var concomitante = _context.Eventos
+                                        .Any(w => !w.Excluido 
+                                             && w.UsuarioInclusaoId != null 
+                                             && w.UsuarioInclusaoId == evento.UsuarioInclusaoId
+                                             && (
+                                                   //data inicio entre o inicio e fim
+                                                   (w.Inicio <= evento.Inicio && evento.Inicio <= w.Fim)
+                                                   //data fim entre o inicio e fim
+                                                   || (w.Inicio <= evento.Fim && evento.Fim <= w.Fim)
+                                                   //data inicio antes e fim depois
+                                                   || (evento.Inicio <= w.Inicio && w.Fim <= evento.Fim)
+                                                )
+                                            );
+                    if(concomitante) throw (new Exception("Existem eventos concomitantes!"));
+                }
+
+                return new RetornoViewModel
+                {
+                    Sucesso = true,
+                };
+            }
+            catch (Exception e)
+            {
+                return new RetornoViewModel
+                {
+                    Sucesso = false,
+                    Mensagem = e.Message
+                };
+            }
+            
+
         }
 
     }
