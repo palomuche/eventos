@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8PBXENeratUXRrB8oHO1sNBdrU6Fe/UHy6QQ2xAPAgNutlVis+Vj41qziNWNKVEZWphe/M/IwY1Rt7KjVe7zTg==",
+  "dgSpecHash": "2/adQ0fc2zyzcXb+lnGn6GhNoiVxuYClHBFbzBIEayZwUmeu/nZdejNxTmZzH+QFGo2NMpZE+LneZ+8uqWifnQ==",
   "success": true,
-  "projectFilePath": "C:\\Paulinho\\Teste\\Agenda\\EventoSolution\\EventoApi\\EventoApi.csproj",
+  "projectFilePath": "C:\\Paulinho\\Git\\Eventos\\EventoSolution\\EventoApi\\EventoApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pauli\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\pauli\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

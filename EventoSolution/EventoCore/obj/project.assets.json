@@ -4400,11 +4400,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Paulinho\\Teste\\Agenda\\EventoSolution\\EventoCore\\EventoCore.csproj",
+      "projectUniqueName": "C:\\Paulinho\\Git\\Eventos\\EventoSolution\\EventoCore\\EventoCore.csproj",
       "projectName": "EventoCore",
-      "projectPath": "C:\\Paulinho\\Teste\\Agenda\\EventoSolution\\EventoCore\\EventoCore.csproj",
+      "projectPath": "C:\\Paulinho\\Git\\Eventos\\EventoSolution\\EventoCore\\EventoCore.csproj",
       "packagesPath": "C:\\Users\\pauli\\.nuget\\packages\\",
-      "outputPath": "C:\\Paulinho\\Teste\\Agenda\\EventoSolution\\EventoCore\\obj\\",
+      "outputPath": "C:\\Paulinho\\Git\\Eventos\\EventoSolution\\EventoCore\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\pauli\\AppData\\Roaming\\NuGet\\NuGet.Config",

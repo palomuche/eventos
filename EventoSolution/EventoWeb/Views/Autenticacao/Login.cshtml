@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>Sistema Focinhus</title>
+    <title>Sistema</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 
@@ -163,16 +163,14 @@
                     <div class="margin input top"><input id="inputLogin" type="text" placeholder="Digite o username"></div>
                     <div class="margin input top"><input id="inputSenha" type="password"  placeholder="Digite a senha"></div>
 
-                    <p class="left"> <input id="checkLembrar" type="checkbox"> <span>Lembrar de mim</span> </p>
 
                     <div class="margin left2 top"><button class="button-logar" type="submit" onclick="realizaLogin()">ENTRAR</button></div>
                     <div class="margin  left2 top1"><button class="button-logar" type="submit">CADASTRAR</button></div>
 
 
-                     <p class="left3"> <span><u>Esqueci minha senha</u></span> </p>
 
                 </div>
-                <div class="imagem-grande"><img  class="imagem-grande" src="~/img/BG_SISTEMA.png" /></div>
+                @* <div class="imagem-grande"><img  class="imagem-grande" src="~/img/BG_SISTEMA.png" /></div> *@
             </div>
 
 
@@ -187,7 +185,6 @@
         function realizaLogin() {
             const login = $("#inputLogin").val();
             const senha = $("#inputSenha").val();
-            const lembrar = $("#checkLembrar")[0].checked;
 
             if (login == '' || senha == '') {
                 $("#erro").html("Preencha o Login e Senha para continuar");
@@ -202,11 +199,9 @@
                 data: {
                     Login: login,
                     Senha: senha,
-                    Lembrar: lembrar,
                 },
                 success: function (data) {
                     if (data.sucesso) {
-                        localStorage.setItem("token", data.mensagem);
                         window.location.href = '@(Url.Action("Index", "Home"))';
                     }
                     else {

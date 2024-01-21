@@ -1,31 +1,36 @@
 ﻿using EventoCore.Entities;
 using EventoCore.Interfaces;
 using EventoCore.ViewModels;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using System.Security.Claims;
 
 namespace EventoWeb.Controllers
 {
     [Authorize]
     public class AutenticacaoController : Controller
     {
-        private readonly UserManager<Usuario> _userManager;
-        private readonly SignInManager<Usuario> _signManager;
         private readonly IUsuarioRepository _usuarioRepository;
 
-        public AutenticacaoController(UserManager<Usuario> userManager, SignInManager<Usuario> signInManager, IUsuarioRepository usuarioRepository)
+        public AutenticacaoController(IUsuarioRepository usuarioRepository)
         {
-            _userManager = userManager;
-            _signManager = signInManager;
             _usuarioRepository = usuarioRepository;
         }
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("/Login")]
+        //[Route("/Login")]
         public IActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (!_usuarioRepository.GetAll().Any())
             {
                 var usuario = new Usuario
@@ -35,7 +40,7 @@ namespace EventoWeb.Controllers
                     Email = "paulinho.mucheroni@gmail.com",
                 };
                 var senha = "Master@2024";
-                var resultado = _userManager.CreateAsync(usuario, senha).Result;
+                //var resultado = _userManager.CreateAsync(usuario, senha).Result;
             }
 
             return View();
@@ -50,8 +55,22 @@ namespace EventoWeb.Controllers
                 if (ModelState.IsValid)
                 {
                     var retorno = _usuarioRepository.RealizaLogin(model);
+
                     if (retorno.Sucesso)
                     {
+                        var claims = new List<Claim>
+                        {
+                            new Claim(ClaimTypes.Name, model.Login)
+                        };
+
+                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var authProperties = new AuthenticationProperties{};
+
+                        HttpContext.SignInAsync(
+                            CookieAuthenticationDefaults.AuthenticationScheme,
+                            new ClaimsPrincipal(claimsIdentity),
+                            authProperties);
+
                         return new RetornoViewModel
                         {
                             Sucesso = true,
@@ -80,8 +99,8 @@ namespace EventoWeb.Controllers
         [Route("/Sair")]
         public IActionResult Sair()
         {
-            _signManager.SignOutAsync().Wait();
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "Autenticacao");
         }
     }
 }

@@ -3,6 +3,7 @@ using EventoCore.Entities;
 using EventoCore.Interfaces;
 using EventoCore.Repositories;
 using EventoCore.ViewModels;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,6 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
@@ -23,46 +23,57 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
 });
 
 
-builder.Services.AddIdentity<Usuario, IdentityRole<Guid>>()
-    .AddEntityFrameworkStores<ApplicationContext>()
-    .AddDefaultTokenProviders();
+////builder.Services.AddIdentity<Usuario, IdentityRole<Guid>>()
+////    .AddEntityFrameworkStores<ApplicationContext>()
+////    .AddDefaultTokenProviders();
 
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    options.LoginPath = new PathString("/Login");
-});
-
-//// Add authentication services
-//builder.Services.AddAuthentication("YourCookieAuthenticationScheme")
-//    .AddCookie("YourCookieAuthenticationScheme", options =>
-//    {
-//        options.LoginPath = new PathString("/Login"); // or your login path
-//        options.AccessDeniedPath = "/Autenticacao/AccessDenied"; // or your access denied path
-//    });
-
+////builder.Services.ConfigureApplicationCookie(options =>
+////{
+////    options.LoginPath = new PathString("/Login");
+////});
 
 //var jwtSettingsSection = builder.Configuration.GetSection("JwtSettings");
 //builder.Services.Configure<JwtSettings>(jwtSettingsSection);
 //var jwtSettings = jwtSettingsSection.Get<JwtSettings>();
 //var key = Encoding.ASCII.GetBytes(jwtSettings.Segredo);
 
-//builder.Services.AddAuthentication(options =>
+// Configuração do JWT
+//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+//.AddCookie(options =>
 //{
-//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//}).AddJwtBearer(options =>
-//{
-//    options.RequireHttpsMetadata = true;
-//    options.SaveToken = true;
-//    options.TokenValidationParameters = new TokenValidationParameters
+//    options.Events = new CookieAuthenticationEvents
 //    {
-//        IssuerSigningKey = new SymmetricSecurityKey(key),
-//        ValidateIssuer = true,
-//        ValidateAudience = true,
-//        ValidAudience = jwtSettings.Audiencia,
-//        ValidIssuer = jwtSettings.Emissor
+//        OnRedirectToLogin = ctx =>
+//        {
+//            ctx.Response.Redirect("/");
+//            return Task.CompletedTask;
+//        }
+//    };
+//})
+//.AddJwtBearer(options =>
+//{
+//    options.SaveToken = true;
+//    options.Events = new JwtBearerEvents
+//    {
+//        OnMessageReceived = context =>
+//        {
+//            if (context.Request.Cookies.ContainsKey("UserAuthToken"))
+//            {
+//                context.Token = context.Request.Cookies["UserAuthToken"];
+//            }
+//            return Task.CompletedTask;
+//        }
 //    };
 //});
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/"; // Caminho para a sua página de login
+        options.AccessDeniedPath = "/"; // Página para acesso negado
+        // Configurações adicionais conforme necessário
+    });
+
 
 var app = builder.Build();
 
@@ -82,8 +93,9 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Autenticacao}/{action=Login}/{id?}");
 
 app.Run();
