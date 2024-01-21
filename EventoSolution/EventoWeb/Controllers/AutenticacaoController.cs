@@ -68,7 +68,8 @@ namespace EventoWeb.Controllers
 
                         var claims = new List<Claim>
                         {
-                            new Claim(ClaimTypes.Name, model.Login)
+                            new Claim(ClaimTypes.Name, model.Login),
+                            new Claim(ClaimTypes.NameIdentifier, retorno.UsuarioId.ToString())
                         };
 
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

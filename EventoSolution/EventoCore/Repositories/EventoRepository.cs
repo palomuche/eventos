@@ -22,16 +22,44 @@ namespace EventoCore.Repositories
             _dbContext = dbContext;
         }
 
-        public IEnumerable<Evento> GetAll()
-        {
-            return _dbContext.Eventos.Where(w => !w.Excluido).AsEnumerable();
-        }
-
         public IEnumerable<Evento> GetAll(string token)
         {
             try
             {
                 var url = $"{apiUrl}/api/evento";
+
+                // Cria uma instância do HttpClient
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    // Envia a requisição POST
+                    HttpResponseMessage response = client.GetAsync(url).Result;
+
+                    string responseBody = response.Content.ReadAsStringAsync().Result;
+
+                    // Verifica se deu erro
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        throw new Exception();
+                    }
+
+                    var retorno = JsonConvert.DeserializeObject<IEnumerable<Evento>>(responseBody);
+
+                    return retorno;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public IEnumerable<Evento> GetByUsuario(string token, Guid usuarioId)
+        {
+            try
+            {
+                var url = $"{apiUrl}/api/evento/meus-eventos/{usuarioId}";
 
                 // Cria uma instância do HttpClient
                 using (var client = new HttpClient())

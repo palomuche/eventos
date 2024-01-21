@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace EventoWeb.Controllers
@@ -24,11 +25,8 @@ namespace EventoWeb.Controllers
         {
             if (HttpContext.Request.Cookies.TryGetValue("UserAuthToken", out string token))
             {
-                ViewData["Eventos"] = _eventoRepository.GetAll(token);
-            }
-            else
-            {
-                ViewData["Eventos"] = _eventoRepository.GetAll();
+                var usuarioId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                ViewData["Eventos"] = _eventoRepository.GetByUsuario(token, usuarioId).OrderByDescending(o => o.Inicio);
             }
             return View();
         }

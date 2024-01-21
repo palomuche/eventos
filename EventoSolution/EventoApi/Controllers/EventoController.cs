@@ -1,9 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Authorization;
 using EventoCore.Context;
 using EventoCore.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EventoApi.Controllers
 {
@@ -38,6 +37,20 @@ namespace EventoApi.Controllers
 
             return evento;
         }
+
+        [HttpGet("meus-eventos/{id:Guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult<IEnumerable<Evento>>> GetEventoByUsuario(Guid id)
+        {
+            var eventos = await _context.Eventos.Where(w => !w.Excluido && (Guid)w.UsuarioInclusaoId == id).ToListAsync();
+
+            if (eventos == null) return NotFound();
+
+            return eventos;
+        }
+
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
