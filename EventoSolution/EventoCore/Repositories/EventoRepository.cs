@@ -27,10 +27,43 @@ namespace EventoCore.Repositories
             return _dbContext.Eventos.Where(w => !w.Excluido).AsEnumerable();
         }
 
+        public IEnumerable<Evento> GetAll(string token)
+        {
+            try
+            {
+                var url = $"{apiUrl}/api/evento";
+
+                // Cria uma instância do HttpClient
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    // Envia a requisição POST
+                    HttpResponseMessage response = client.GetAsync(url).Result;
+
+                    string responseBody = response.Content.ReadAsStringAsync().Result;
+
+                    // Verifica se deu erro
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        throw new Exception();
+                    }
+
+                    var retorno = JsonConvert.DeserializeObject<IEnumerable<Evento>>(responseBody);
+
+                    return retorno;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public Evento GetById(Guid id)
         {
             return _dbContext.Eventos.SingleOrDefault(t => t.Id == id);
-        }
+        }       
 
         public Evento CadastrarEvento(AutenticacaoViewModel model, string token)
         {

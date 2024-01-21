@@ -22,7 +22,14 @@ namespace EventoWeb.Controllers
 
         public IActionResult Index()
         {
-            ViewData["Eventos"] = _eventoRepository.GetAll();
+            if (HttpContext.Request.Cookies.TryGetValue("UserAuthToken", out string token))
+            {
+                ViewData["Eventos"] = _eventoRepository.GetAll(token);
+            }
+            else
+            {
+                ViewData["Eventos"] = _eventoRepository.GetAll();
+            }
             return View();
         }
 

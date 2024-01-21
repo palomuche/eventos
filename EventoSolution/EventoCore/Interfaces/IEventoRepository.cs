@@ -9,6 +9,7 @@ namespace EventoCore.Interfaces
     public interface IEventoRepository
     {
         IEnumerable<Evento> GetAll();
+        IEnumerable<Evento> GetAll(string token);
         Evento GetById(Guid id);
         Evento CadastrarEvento(AutenticacaoViewModel model, string token);
     }
