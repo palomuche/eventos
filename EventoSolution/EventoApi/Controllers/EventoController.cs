@@ -1,5 +1,6 @@
 using EventoCore.Context;
 using EventoCore.Entities;
+using EventoCore.Migrations;
 using EventoCore.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -45,7 +46,7 @@ namespace EventoApi.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult<IEnumerable<Evento>>> GetEventoByUsuario(Guid id)
         {
-            var eventos = await _context.Eventos.Where(w => !w.Excluido && w.UsuarioInclusaoId != null && (Guid)w.UsuarioInclusaoId == id).ToListAsync();
+            var eventos = await _context.Eventos.Include(w => w.UsuarioInclusao).Where(w => !w.Excluido && w.UsuarioInclusaoId != null && (Guid)w.UsuarioInclusaoId == id).ToListAsync();
 
             if (eventos == null) return NotFound();
 
@@ -80,15 +81,35 @@ namespace EventoApi.Controllers
             return CreatedAtAction(nameof(GetEvento), new { evento.Id }, evento);
         }
 
-        [HttpPut]
+        [HttpPut("{id:Guid}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> PutEvento(Guid id, Evento evento)
+        public async Task<IActionResult> PutEvento(Guid id, CadastroEventoViewModel model)
         {
-            if (id != evento.Id) return BadRequest();
+            if (model.Id != id) return BadRequest();
+
+            var evento = _context.Eventos.FirstOrDefault(e => e.Id == id);
+
+            if (evento == null) return BadRequest();
             if (!ModelState.IsValid) return ValidationProblem(ModelState);
 
+            evento.Titulo = model.Titulo;
+            evento.Descricao = model.Descricao;
+            evento.Inicio = model.Inicio;
+            evento.Fim = model.Fim;
+            evento.Alteracao = DateTime.Now;
+
+            var validacao = ValidaEvento(evento);
+            if (!validacao.Sucesso)
+            {
+                return ValidationProblem(new ValidationProblemDetails(ModelState)
+                {
+                    Title = validacao.Mensagem,
+                });
+            }
+
             _context.Entry(evento).State = EntityState.Modified;
+            _context.Entry(evento).Property(x => x.Codigo).IsModified = false;
 
             try
             {
@@ -110,11 +131,11 @@ namespace EventoApi.Controllers
             return NoContent();
         }
 
-        [HttpDelete]
+        [HttpDelete("{id:Guid}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> DeleteEvento(int id)
+        public async Task<IActionResult> DeleteEvento(Guid id)
         {
             var evento = await _context.Eventos.FindAsync(id);
 
@@ -143,6 +164,7 @@ namespace EventoApi.Controllers
                                         .Any(w => !w.Excluido 
                                              && w.UsuarioInclusaoId != null 
                                              && w.UsuarioInclusaoId == evento.UsuarioInclusaoId
+                                             && w.Id != evento.Id
                                              && (
                                                    //data inicio entre o inicio e fim
                                                    (w.Inicio <= evento.Inicio && evento.Inicio <= w.Fim)

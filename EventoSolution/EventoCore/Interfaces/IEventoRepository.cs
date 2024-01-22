@@ -10,7 +10,9 @@ namespace EventoCore.Interfaces
     {
         IEnumerable<Evento> GetAll(string token);
         IEnumerable<Evento> GetByUsuario(string token, Guid usuarioId);
-        Evento GetById(Guid id);
-        Evento CadastrarEvento(AutenticacaoViewModel model, string token);
+        Evento GetById(string token, Guid id);
+        RetornoViewModel CadastrarEvento(CadastroEventoViewModel model, string token);
+        RetornoViewModel EditarEvento(CadastroEventoViewModel model, string token);
+        RetornoViewModel ExcluirEvento(string token, Guid id);
     }
 }

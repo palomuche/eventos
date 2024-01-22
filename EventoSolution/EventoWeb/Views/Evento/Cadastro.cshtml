@@ -1,35 +1,105 @@
-﻿
+﻿@using EventoCore.Entities
+@{
+    var evento = (Evento)ViewBag.Evento;
+}
 
-    <div class="div">
-    <div class="box">
-        <div class="div">
-            <div class="pading">
-                <div class="TextoEntrar margin top"><img  class="img-logar" src="~/img/LOGO_TOP.png" /></div>
-                <div id="erro" class="d-none"></div>
-                <div class="margin input top"><input id="inputLogin" type="text" placeholder="Digite o username"></div>
-                <div class="margin input top"><input id="inputSenha" type="password"  placeholder="Digite a senha"></div>
+<style>
 
+    .body-cadastro {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: white;
+    }
 
-                <div class="margin  left2 top1"><button class="button-logar" type="submit" onclick="cadastrarEvento()">CADASTRAR</button></div>
+    .cadastro {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+        width: 500px;
+    }
 
-            </div>
+        .cadastro .pading {
+            display: flex;
+            flex-direction: column;
+        }
+
+    .input input {
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        width: 100%;
+    }
+
+        .input input:focus {
+            outline: none;
+            border-color: #9165e3;
+        }
+
+    .button-cadastro {
+        color: white;
+        border: none;
+        cursor: pointer;
+        display: inline-block;
+    }
+
+        .button-cadastro:hover {
+        }
+
+    #erro {
+        color: red;
+        margin-bottom: 10px;
+    }
+
+    .d-none {
+        display: none;
+    }
+
+    .input textarea {
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        width: 100%;
+        height: 100px; /* Altura do textarea */
+        resize: vertical; /* Permite ao usuário ajustar a altura verticalmente */
+    }
+
+        .input textarea:focus {
+            outline: none;
+            border-color: #9165e3;
+        }
+
+</style>
+
+<div class="body-cadastro">
+    <div class="cadastro">
+        <div class="pading">
+            <div id="erro" class="d-none"></div>
+            <div class="margin input top"><input id="inputTitulo" type="text" placeholder="Digite o título" value="@evento?.Titulo"></div>
+            <div class="margin input top"><textarea id="inputDescricao" placeholder="Digite a descrição">@evento?.Descricao</textarea></div>
+            <div class="margin input top"><input id="inputInicio" type="datetime-local" value="@evento?.Inicio.ToString("yyyy-MM-ddTHH:mm")"></div>
+            <div class="margin input top"><input id="inputFim" type="datetime-local" value="@evento?.Fim.ToString("yyyy-MM-ddTHH:mm")"></div>
+            <div class="margin left2 top1 text-center"><button class="button-cadastro" type="submit" onclick="cadastrarEvento()">SALVAR</button></div>
         </div>
-
-
-             
     </div>
-
 </div>
- 
 
 <script>
 
     function cadastrarEvento() {
-        const login = $("#inputLogin").val();
-        const senha = $("#inputSenha").val();
+        const titulo = $("#inputTitulo").val();
+        const descricao = $("#inputDescricao").val();
+        const inicio = $("#inputInicio").val();
+        const fim = $("#inputFim").val();
 
-        if (login == '' || senha == '') {
-            $("#erro").html("Preencha o Login e Senha para continuar");
+        if (titulo == '' || inicio == '' || inicio == '') {
+            $("#erro").html("Preencha todos os campos!");
             $("#erro").removeClass("d-none");
             return;
         }
@@ -39,12 +109,16 @@
             url: '@(Url.Action("CadastrarEvento", "Evento"))',
             method: 'POST',
             data: {
-                Login: login,
-                Senha: senha,
+                Titulo: titulo,
+                Descricao: descricao,
+                Inicio: inicio,
+                Fim: fim,
+                UsuarioId: '@evento?.UsuarioInclusaoId',
+                Id: '@evento?.Id',
             },
             success: function (data) {
                 if (data.sucesso) {
-                    window.location.href = '@(Url.Action("Index", "Home"))';
+                    window.location.href = '@(Url.Action("Index", "Evento"))';
                 }
                 else {
                     $("#erro").html(data.mensagem);

@@ -27,6 +27,15 @@
             font-family: 'Arial', sans-serif;
         }
 
+        button {
+            background-color: #9165e3;
+            width: 125px;
+            height: 30px;
+            color: white;
+            border-radius: 30px;
+            border: transparent;
+        }
+
         .grid-principal {
             transition: all 1.0s ease;
             display: grid;
@@ -81,7 +90,7 @@
             cursor: pointer;
             display: flex;
             margin-top: 1rem;
-            color: white;
+            color: #9165e3;
             font-size: 1.5rem;
             align-items: center;
             justify-content: left;
@@ -94,6 +103,27 @@
 
         .title-ativo {
             border-left: 5px solid #FFC2B4;
+        }
+
+        .icone-sidebar {
+            font-size: 35px;
+            padding: 12px;
+        }
+
+        .icone-sair {
+            font-size: 35px;
+            padding: 12px;
+            color: white;
+        }
+
+        .button-lista {
+            background-color: transparent;
+            width: auto;
+            height: auto;
+            color: #9165e3;
+            border-radius: 30px;
+            border: transparent;
+
         }
 
     </style>
@@ -109,21 +139,18 @@
                     </div>
                     <a href="@(Url.Action("Index", "Home"))">
                         <div class="lista-menu-lateral @((string)ViewBag.Title == "Home" ? Html.Raw("title-ativo") : Html.Raw(""))">
-                            <div>Dashboard</div>
+                            <i class="fas fa-user icone-sidebar"></i> <div>Dashboard</div>
                         </div>
                     </a>
                     <a href="@(Url.Action("Index", "Evento"))">
                         <div class="lista-menu-lateral @((string)ViewBag.Title == "Eventos" ? Html.Raw("title-ativo") : Html.Raw(""))">
-                            <div>Eventos</div>
+                            <i class="fas fa-calendar icone-sidebar"></i><div>Eventos</div>
                         </div>
                     </a>
                 </div>
                 <div>
                     <div class="lista-menu-lateral">
-                        <img style="height:3rem" src="~/img/FOTO_USUARIO.png" />
-                        <div style="font-size: 15px; color: #FB9066">
-                            <p><b>Meu Usuário</b><button class="btn-danger" style="border-radius: 15px; margin-left:1rem" type="submit" onclick="sairSistema()">Sair</button></p>
-                        </div>
+                        <i class="fas fa-sign-out-alt icone-sair" onclick="sairSistema()"></i>
                     </div>
                 </div>
             </div>

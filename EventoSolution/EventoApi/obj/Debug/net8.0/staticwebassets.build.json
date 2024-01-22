@@ -1,13 +1,13 @@
 {
   "Version": 1,
-  "Hash": "eyZLTgeJqKwj19KpAoHb9q/4IrpC0YfH/KJbWZxeMyY=",
+  "Hash": "EIVIkKj/YkjuNGzmAusn/gx5KVDfsdOetbm+F0cwEio=",
   "Source": "EventoApi",
   "BasePath": "_content/EventoApi",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [
     {
-      "Identity": "C:\\Users\\Lais\\Documents\\Projetos\\Evento\\EventoSolution\\EventoCore\\EventoCore.csproj",
+      "Identity": "C:\\Paulinho\\Git\\Eventos\\EventoSolution\\EventoCore\\EventoCore.csproj",
       "Version": 2,
       "Source": "EventoCore",
       "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",

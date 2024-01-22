@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Lais\\Documents\\Projetos\\Evento\\EventoSolution\\EventoCore\\EventoCore.csproj": {}
+    "C:\\Paulinho\\Git\\Eventos\\EventoSolution\\EventoCore\\EventoCore.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Lais\\Documents\\Projetos\\Evento\\EventoSolution\\EventoCore\\EventoCore.csproj": {
+    "C:\\Paulinho\\Git\\Eventos\\EventoSolution\\EventoCore\\EventoCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lais\\Documents\\Projetos\\Evento\\EventoSolution\\EventoCore\\EventoCore.csproj",
+        "projectUniqueName": "C:\\Paulinho\\Git\\Eventos\\EventoSolution\\EventoCore\\EventoCore.csproj",
         "projectName": "EventoCore",
-        "projectPath": "C:\\Users\\Lais\\Documents\\Projetos\\Evento\\EventoSolution\\EventoCore\\EventoCore.csproj",
-        "packagesPath": "C:\\Users\\Lais\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lais\\Documents\\Projetos\\Evento\\EventoSolution\\EventoCore\\obj\\",
+        "projectPath": "C:\\Paulinho\\Git\\Eventos\\EventoSolution\\EventoCore\\EventoCore.csproj",
+        "packagesPath": "C:\\Users\\pauli\\.nuget\\packages\\",
+        "outputPath": "C:\\Paulinho\\Git\\Eventos\\EventoSolution\\EventoCore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Lais\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pauli\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
