@@ -123,11 +123,16 @@ namespace EventoWeb.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult CadastrarUsuario(AutenticacaoViewModel model)
+        public RetornoViewModel CadastrarUsuario(RegisterUserViewModel model)
         {
-            _usuarioRepository.CadastrarUsuario(model);
-
-            return View();
+            try
+            {
+                return _usuarioRepository.CadastrarUsuario(model);
+            }
+            catch (Exception)
+            {
+                return new RetornoViewModel() { Sucesso = false, Mensagem = "Ocorreu um erro inesperado" };
+            }
         }
     }
 }

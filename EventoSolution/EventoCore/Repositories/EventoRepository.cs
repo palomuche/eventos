@@ -165,8 +165,6 @@ namespace EventoCore.Repositories
                         throw new Exception(title);
                     }
 
-                    var retorno = JsonConvert.DeserializeObject<ActionResult<Evento>>(responseBody);
-
                     return new RetornoViewModel()
                     {
                         Mensagem = "Sucesso",

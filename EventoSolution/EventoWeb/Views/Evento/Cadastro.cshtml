@@ -46,6 +46,7 @@
         border: none;
         cursor: pointer;
         display: inline-block;
+        margin-top: 20px;
     }
 
         .button-cadastro:hover {
@@ -75,10 +76,16 @@
             border-color: #9165e3;
         }
 
+    .titulo-cadastro {
+        margin-bottom: 35px;
+        text-align: center;
+        color: #9165e3;
+    }
 </style>
 
 <div class="body-cadastro">
     <div class="cadastro">
+        <h1 class="titulo-cadastro">Cadastro de Evento</h1>
         <div class="pading">
             <div id="erro" class="d-none"></div>
             <div class="margin input top"><input id="inputTitulo" type="text" placeholder="Digite o título" value="@evento?.Titulo"></div>

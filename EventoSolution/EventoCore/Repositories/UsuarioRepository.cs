@@ -4,6 +4,7 @@ using EventoCore.Entities;
 using EventoCore.Interfaces;
 using EventoCore.ViewModels;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,7 +70,7 @@ namespace EventoCore.Repositories
             }
         }
 
-        public UsuarioLogadoViewModel CadastrarUsuario(AutenticacaoViewModel model)
+        public RetornoViewModel CadastrarUsuario(RegisterUserViewModel model)
         {
             try
             {
@@ -92,10 +93,34 @@ namespace EventoCore.Repositories
                     // Verifica se deu erro
                     if (!response.IsSuccessStatusCode)
                     {
-                        throw new Exception();
+                        // Convertendo a string JSON em JObject
+                        JObject jsonResponse = JObject.Parse(responseBody);
+
+                        // Acessando a propriedade 'title'
+                        string erros = jsonResponse["errors"]?.ToString();
+                        JObject listaErros = JObject.Parse(erros);
+
+                        // Lista para armazenar todos os erros
+                        List<string> allErrors = new List<string>();
+
+                        // Iterando sobre todas as propriedades do JSON
+                        foreach (var property in listaErros.Properties())
+                        {
+                            // Extrair o array de erros para cada propriedade e adicionar à lista de todos os erros
+                            List<string> errors = property.Value.ToObject<List<string>>();
+                            if (errors != null)
+                            {
+                                allErrors.AddRange(errors);
+                            }
+                        }
+
+                        // Juntar todos os erros em uma string, separados por "; "
+                        string allErrorsCombined = String.Join(";<br> ", allErrors);
+
+                        return new RetornoViewModel { Sucesso = false, Mensagem = allErrorsCombined };
                     }
 
-                    UsuarioLogadoViewModel retorno = JsonConvert.DeserializeObject<UsuarioLogadoViewModel>(responseBody);
+                    var retorno = new RetornoViewModel { Sucesso = true };
 
                     return retorno;
                 }

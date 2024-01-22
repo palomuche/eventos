@@ -26,19 +26,20 @@ namespace EventoApi.Controllers
             _jwtSettings = jwtSettings.Value;
         }
 
-        [HttpPost("registrar")]
+        [HttpPost("cadastro")]
         public async Task<ActionResult> Registrar(RegisterUserViewModel registerUser)
         {
             if (!ModelState.IsValid) return ValidationProblem(ModelState);
 
             var user = new Usuario
             {
-                UserName = registerUser.Email,
+                Nome = registerUser.Nome,
                 Email = registerUser.Email,
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                UserName = registerUser.Login,
             };
 
-            var result = await _userManager.CreateAsync(user, registerUser.Password);
+            var result = await _userManager.CreateAsync(user, registerUser.Senha);
 
             if (result.Succeeded)
             {

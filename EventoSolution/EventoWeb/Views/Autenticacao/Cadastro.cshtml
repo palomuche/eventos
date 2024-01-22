@@ -1,77 +1,176 @@
 ﻿@{
-    Layout = null;
+    Layout = "_LayoutDeslogado";
 }
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>Sistema</title>
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
+<style>
 
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap-notify.js" asp-append-version="true"></script>
+    .body-cadastro {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: white;
+    }
 
-    </head>
-    <body>
-        <div class="div">
-            <div class="box">
-                <div class="div">
-                    <div class="pading">
-                        <div class="TextoEntrar margin top"><img  class="img-logar" src="~/img/LOGO_TOP.png" /></div>
-                        <div id="erro" class="d-none"></div>
-                        <div class="margin input top"><input id="inputUsername" type="text" placeholder="Digite o username"></div>
-                        <div class="margin input top"><input id="inputPassword" type="password" placeholder="Digite a senha"></div>
+    .cadastro {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+        width: 500px;
+    }
 
-
-                        <div class="margin  left2 top1"><button class="button-logar" type="submit" onclick="cadastrarUsuario()">CADASTRAR</button></div>
-
-                    </div>
-                </div>             
-            </div>
-
-        </div>
- 
-
-        <script>
-
-        function cadastrarUsuario() {
-            const login = $("#inputUsername").val();
-            const senha = $("#inputPassword").val();
-
-            if (login == '' || senha == '') {
-                $("#erro").html("Preencha o Login e Senha para continuar");
-                $("#erro").removeClass("d-none");
-                return;
-            }
-            $("#erro").addClass("d-none");
-
-            $.ajax({
-                url: '@(Url.Action("CadastrarUsuario", "Autenticacao"))',
-                method: 'POST',
-                data: {
-                    Login: login,
-                    Senha: senha,
-                },
-                success: function (data) {
-                    if (data.sucesso) {
-                        window.location.href = '@(Url.Action("Index", "Home"))';
-                    }
-                    else {
-                        $("#erro").html(data.mensagem);
-                        $("#erro").removeClass("d-none");
-                    }
-                },
-                error: function (data) {
-                    $("#erro").html("Ocorreu um erro ao autenticar");
-                    $("#erro").removeClass("d-none");
-                },
-            });
+        .cadastro .pading {
+            display: flex;
+            flex-direction: column;
         }
 
-        </script>
-    </body>
-</html>
+    .input input {
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        width: 100%;
+    }
+
+        .input input:focus {
+            outline: none;
+            border-color: #9165e3;
+        }
+
+    .button-cadastro {
+        color: white;
+        border: none;
+        cursor: pointer;
+        display: inline-block;
+        margin-top: 20px;
+    }
+
+        .button-cadastro:hover {
+        }
+
+    #erro {
+        color: red;
+        margin-bottom: 10px;
+    }
+
+    .d-none {
+        display: none;
+    }
+
+    .input textarea {
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        width: 100%;
+        height: 100px; /* Altura do textarea */
+        resize: vertical; /* Permite ao usuário ajustar a altura verticalmente */
+    }
+
+        .input textarea:focus {
+            outline: none;
+            border-color: #9165e3;
+        }
+
+
+    .titulo-cadastro {
+        margin-bottom: 35px;
+        text-align: center;
+        color: #9165e3;
+    }
+
+</style>
+
+<div class="body-cadastro">
+    <div class="cadastro">
+    <h1 class="titulo-cadastro">Cadastro de Usuário</h1>
+        <div class="pading">
+            <div id="erro" class="d-none"></div>
+
+            <div class="margin input top"><input id="inputNome" type="text" placeholder="Digite o nome"></div>
+            <div class="margin input top"><input id="inputEmail" type="email" placeholder="Digite o e-mail"></div>
+            <div class="margin input top"><input id="inputUsername" type="text" placeholder="Digite o login"></div>
+            <div class="margin input top"><input id="inputSenha" type="password" placeholder="Digite a senha"></div>
+            <div class="margin input top"><input id="inputSenhaConfirmacao" type="password" placeholder="Digite a senha novamente"></div>
+
+            <div class="margin left2 top1 text-center"><button class="button-cadastro" type="submit" onclick="cadastrarUsuario()">SALVAR</button></div>
+        </div>
+    </div>
+</div>
+ 
+
+<script>
+
+    function cadastrarUsuario() {
+        const nome = $("#inputNome").val();
+        const email = $("#inputEmail").val();
+        const login = $("#inputUsername").val();
+        const senha = $("#inputSenha").val();
+        const senhaConfirmacao = $("#inputSenhaConfirmacao").val();
+
+        if (nome == '' || email == '' || login == '' || senha == '' || senhaConfirmacao == '') {
+            $("#erro").html("Preencha todos os campos!");
+            $("#erro").removeClass("d-none");
+            return;
+        }
+        $("#erro").addClass("d-none");
+
+        $.ajax({
+            url: '@(Url.Action("CadastrarUsuario", "Autenticacao"))',
+            method: 'POST',
+            data: {
+                Nome: nome,
+                Email: email,
+                Login: login,
+                Senha: senha,
+                SenhaConfirmacao: senhaConfirmacao,
+            },
+            success: function (data) {
+                if (data.sucesso) {
+                    realizaLogin(login, senha);
+                }
+                else {
+                    $("#erro").html(data.mensagem);
+                    $("#erro").removeClass("d-none");
+                }
+            },
+            error: function (data) {
+                $("#erro").html("Ocorreu um erro ao autenticar");
+                $("#erro").removeClass("d-none");
+            },
+        });
+    }
+
+
+
+    function realizaLogin(login, senha) {
+
+
+        $.ajax({
+            url: '@(Url.Action("RealizaLogin", "Autenticacao"))',
+            method: 'POST',
+            data: {
+                Login: login,
+                Senha: senha,
+            },
+            success: function (data) {
+                if (data.sucesso) {
+                    window.location.href = '@(Url.Action("Index", "Home"))';
+                }
+                else {
+                    $("#erro").html(data.mensagem);
+                    $("#erro").removeClass("d-none");
+                }
+            },
+            error: function (data) {
+                $("#erro").html("Ocorreu um erro ao autenticar");
+                $("#erro").removeClass("d-none");
+            },
+        });
+    }
+
+
+</script>

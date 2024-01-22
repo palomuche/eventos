@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Sistema</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap-notify.js" asp-append-version="true"></script>
+
+    <style>
+
+        body {
+            margin: 0 !important;
+            font-family: 'Arial', sans-serif;
+        }
+
+        button {
+            background-color: #9165e3;
+            width: 125px;
+            height: 30px;
+            color: white;
+            border-radius: 30px;
+            border: transparent;
+        }
+
+        .grid-principal {
+            transition: all 1.0s ease;
+            display: grid;
+            grid-template-rows: 50px 1fr;
+            grid-template-columns: 73px 1fr;
+            grid-template-areas:
+                "menu-lateral conteudo"
+                "menu-lateral conteudo"
+                "menu-lateral conteudo";
+            height: 100%;
+        }
+
+        .conteudo {
+            grid-area: conteudo;
+            width: 100%;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .menu-lateral {
+            grid-area: menu-lateral;
+            background-color: #ffd7b5;
+            transition: all 2s ease-in-out;
+            height: 100%;
+            overflow: hidden;
+            padding-left: 0.5rem;
+        }
+
+        .sidebar {
+            height: 100vh;
+            padding-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding-bottom: 1rem;
+        }
+
+            .sidebar ul li .tooltip {
+                left: 85px !important;
+                background-color: var(--branco);
+            }
+
+            .sidebar.active .profile_content .profile {
+                background-color: #ffd7b5;
+            }
+
+        .toggle-menu {
+            grid-template-columns: 240px 1fr !important;
+        }
+
+        .lista-menu-lateral {
+            cursor: pointer;
+            display: flex;
+            margin-top: 1rem;
+            color: #9165e3;
+            font-size: 1.5rem;
+            align-items: center;
+            justify-content: left;
+            width: 13rem;
+        }
+
+            .lista-menu-lateral > div {
+                margin-left: 1rem;
+            }
+
+        .title-ativo {
+            border-left: 5px solid #FFC2B4;
+        }
+
+        .icone-sidebar {
+            font-size: 35px;
+            padding: 12px;
+        }
+
+        .icone-sair {
+            font-size: 35px;
+            padding: 12px;
+            color: white;
+        }
+
+        .button-lista {
+            background-color: transparent;
+            width: auto;
+            height: auto;
+            color: #9165e3;
+            border-radius: 30px;
+            border: transparent;
+        }
+
+    </style>
+
+</head>
+<body>
+    <div class="conteudo">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+</body>
+</html>
