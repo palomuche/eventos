@@ -46,7 +46,27 @@ namespace EventoApi.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult<IEnumerable<Evento>>> GetEventoByUsuario(Guid id)
         {
-            var eventos = await _context.Eventos.Include(w => w.UsuarioInclusao).Where(w => !w.Excluido && w.UsuarioInclusaoId != null && (Guid)w.UsuarioInclusaoId == id).ToListAsync();
+            var eventos = new List<Evento>();
+
+            var convites = await _context.Convites
+                .Where(w => !w.Excluido && w.Status == EventoCore.Entities.Convite.StatusConvite.Aceito && w.ConvidadoId == id)
+                .ToListAsync();
+
+            if (convites.Any())
+            {
+                eventos = await _context.Eventos
+                .Include(w => w.UsuarioInclusao)
+                .Where(w => !w.Excluido && w.UsuarioInclusaoId != null 
+                        && ((Guid)w.UsuarioInclusaoId == id) || convites.Select(s => s.EventoId).Contains(w.Id))
+                .ToListAsync();
+            }
+            else
+            {
+                eventos = await _context.Eventos
+                .Include(w => w.UsuarioInclusao)
+                .Where(w => !w.Excluido && w.UsuarioInclusaoId != null && (Guid)w.UsuarioInclusaoId == id)
+                .ToListAsync();
+            }
 
             if (eventos == null) return NotFound();
 
