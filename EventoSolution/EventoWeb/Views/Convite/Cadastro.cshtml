@@ -1,0 +1,142 @@
+﻿@using EventoCore.Entities
+@{
+    var evento = (Evento)ViewBag.Evento;
+}
+
+<style>
+
+    .body-cadastro {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: white;
+    }
+
+    .cadastro {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+        width: 500px;
+    }
+
+        .cadastro .pading {
+            display: flex;
+            flex-direction: column;
+        }
+
+    .input input {
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        width: 100%;
+    }
+
+        .input input:focus {
+            outline: none;
+            border-color: #9165e3;
+        }
+
+    .button-cadastro {
+        color: white;
+        border: none;
+        cursor: pointer;
+        display: inline-block;
+        margin-top: 20px;
+    }
+
+        .button-cadastro:hover {
+        }
+
+    #erro {
+        color: red;
+        margin-bottom: 10px;
+    }
+
+    .d-none {
+        display: none;
+    }
+
+    .input textarea {
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        width: 100%;
+        height: 100px; /* Altura do textarea */
+        resize: vertical; /* Permite ao usuário ajustar a altura verticalmente */
+    }
+
+        .input textarea:focus {
+            outline: none;
+            border-color: #9165e3;
+        }
+
+    .titulo-cadastro {
+        margin-bottom: 35px;
+        text-align: center;
+        color: #9165e3;
+    }
+</style>
+
+<div class="body-cadastro">
+    <div class="cadastro">
+        <h1 class="titulo-cadastro">Cadastro de Evento</h1>
+        <div class="pading">
+            <div id="erro" class="d-none"></div>
+            <div class="margin input top"><input id="inputTitulo" type="text" placeholder="Digite o título" value="@evento?.Titulo"></div>
+            <div class="margin input top"><textarea id="inputDescricao" placeholder="Digite a descrição">@evento?.Descricao</textarea></div>
+            <div class="margin input top"><input id="inputInicio" type="datetime-local" value="@evento?.Inicio.ToString("yyyy-MM-ddTHH:mm")"></div>
+            <div class="margin input top"><input id="inputFim" type="datetime-local" value="@evento?.Fim.ToString("yyyy-MM-ddTHH:mm")"></div>
+            <div class="margin left2 top1 text-center"><button class="button-cadastro" type="submit" onclick="cadastrarEvento()">SALVAR</button></div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function cadastrarEvento() {
+        const titulo = $("#inputTitulo").val();
+        const descricao = $("#inputDescricao").val();
+        const inicio = $("#inputInicio").val();
+        const fim = $("#inputFim").val();
+
+        if (titulo == '' || inicio == '' || inicio == '') {
+            $("#erro").html("Preencha todos os campos!");
+            $("#erro").removeClass("d-none");
+            return;
+        }
+        $("#erro").addClass("d-none");
+
+        $.ajax({
+            url: '@(Url.Action("CadastrarEvento", "Evento"))',
+            method: 'POST',
+            data: {
+                Titulo: titulo,
+                Descricao: descricao,
+                Inicio: inicio,
+                Fim: fim,
+                UsuarioId: '@evento?.UsuarioInclusaoId',
+                Id: '@evento?.Id',
+            },
+            success: function (data) {
+                if (data.sucesso) {
+                    window.location.href = '@(Url.Action("Index", "Evento"))';
+                }
+                else {
+                    $("#erro").html(data.mensagem);
+                    $("#erro").removeClass("d-none");
+                }
+            },
+            error: function (data) {
+                $("#erro").html("Ocorreu um erro ao autenticar");
+                $("#erro").removeClass("d-none");
+            },
+        });
+    }
+
+</script>
