@@ -137,5 +137,56 @@ namespace EventoCore.Repositories
                 throw;
             }
         }
+
+        public RetornoViewModel EnviarConvite(string token, Guid eventoId, Guid convidadoId)
+        {
+            try
+            {
+                var url = $"{apiUrl}/api/convite/enviar";
+
+                // Cria uma instância do HttpClient
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    var convite = new CadastroConviteViewModel
+                    {
+                        EventoId = eventoId,
+                        ConvidadoId = convidadoId
+                    };
+
+                    // Serializa o objeto para JSON
+                    var json = JsonConvert.SerializeObject(convite);
+
+                    // Cria um StringContent que contém o JSON
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    // Envia a requisição PUT
+                    HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                    string responseBody = response.Content.ReadAsStringAsync().Result;
+
+                    // Verifica se deu erro
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        return new RetornoViewModel()
+                        {
+                            Sucesso = false,
+                            Mensagem = responseBody,
+                        };
+                    }
+
+                    return new RetornoViewModel()
+                    {
+                        Sucesso = true,
+                        Mensagem = $"Convite enviado com sucesso!"
+                    };
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

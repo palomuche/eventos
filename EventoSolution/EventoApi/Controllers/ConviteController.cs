@@ -94,6 +94,39 @@ namespace EventoApi.Controllers
             return NoContent();
         }
 
+        [HttpPost("enviar")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> EnviarConvite(CadastroConviteViewModel model)
+        {
+
+            var evento = _context.Eventos.FirstOrDefault(e => e.Id == model.EventoId);
+            var convidado = _context.Usuarios.FirstOrDefault(e => e.Id == model.ConvidadoId);
+
+            if (evento == null || convidado == null) return BadRequest("Evento ou Convidado não encontrado");
+
+            if(_context.Convites.Any(c => !c.Excluido && c.ConvidadoId == model.ConvidadoId && c.EventoId == model.EventoId)) return BadRequest("Esse usuário já foi convidado!");
+
+            var convite = new Convite() { 
+                ConvidadoId = convidado.Id,
+                EventoId = evento.Id,
+                Status = Convite.StatusConvite.Pendente,
+            };
+
+            _context.Add(convite);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Ocorreu um erro na API");
+            }
+
+            return Ok();
+        }
+
         private bool ConviteExists(Guid id)
         {
             return (_context.Convites?.Any(e => e.Id == id)).GetValueOrDefault();

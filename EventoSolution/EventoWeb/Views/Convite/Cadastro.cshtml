@@ -1,4 +1,9 @@
-﻿
+﻿@using EventoCore.Entities
+@{
+    var evento = (Evento)ViewBag.Evento;
+    var usuarios = ((IEnumerable<Usuario>)ViewBag.Usuarios);
+}
+
 <style>
 
     .body-cadastro {
@@ -84,38 +89,48 @@
         <h1 class="titulo-cadastro">Enviar Convite</h1>
         <div class="pading">
             <div id="erro" class="d-none"></div>
-            <div class="margin input top"><input id="inputTitulo" type="text" placeholder="Digite o título" ></div>
-            <div class="margin input top"><textarea id="inputDescricao" placeholder="Digite a descrição"></textarea></div>
-            <div class="margin input top"><input id="inputInicio" type="datetime-local"></div>
-            <div class="margin input top"><input id="inputFim" type="datetime-local"></div>
-            <div class="margin left2 top1 text-center"><button class="button-cadastro">SALVAR</button></div>
+            <div class="margin input top">Título: @evento?.Titulo</div>
+            <div class="margin input top">Descrição: @evento?.Descricao</div>
+            <div class="margin input top">Início: @evento?.Inicio.ToString("dd/MM/yyyy HH:mm")</div>
+            <div class="margin input top">Fim: @evento?.Fim.ToString("dd/MM/yyyy HH:mm")</div><div>
+                <select id="selectUsuario" name="usuarioId">
+                    <option value="" disabled selected>Selecione um usuário</option>
+                    @foreach (var usuario in usuarios)
+                    {
+                        <option value="@usuario.Id">@usuario.Nome</option>
+                    }
+                </select>
+            </div>
+            <div class="margin left2 top1 text-center"><button class="button-cadastro" type="submit" onclick="enviarConvite()">ENVIAR</button></div>
         </div>
     </div>
 </div>
 
 <script>
+    var selectedValue;
 
-    function cadastrarEvento() {
-        const titulo = $("#inputTitulo").val();
-        const descricao = $("#inputDescricao").val();
-        const inicio = $("#inputInicio").val();
-        const fim = $("#inputFim").val();
+    var selectElement = document.getElementById('selectUsuario');
 
-        if (titulo == '' || inicio == '' || inicio == '') {
-            $("#erro").html("Preencha todos os campos!");
+    selectElement.addEventListener('change', function () {
+        selectedValue = selectElement.value;
+    });
+
+    function enviarConvite() {
+        const convidadoId = selectedValue;
+
+        if (selectedValue == '') {
+            $("#erro").html("Selecione um usuário!");
             $("#erro").removeClass("d-none");
             return;
         }
         $("#erro").addClass("d-none");
 
         $.ajax({
-            url: '@(Url.Action("CadastrarEvento", "Evento"))',
+            url: '@(Url.Action("EnviarConvite", "Convite"))',
             method: 'POST',
             data: {
-                Titulo: titulo,
-                Descricao: descricao,
-                Inicio: inicio,
-                Fim: fim,
+                eventoId: '@evento?.Id',
+                convidadoId: convidadoId,
             },
             success: function (data) {
                 if (data.sucesso) {
@@ -127,7 +142,7 @@
                 }
             },
             error: function (data) {
-                $("#erro").html("Ocorreu um erro ao autenticar");
+                $("#erro").html("Ocorreu um erro desconhecido");
                 $("#erro").removeClass("d-none");
             },
         });

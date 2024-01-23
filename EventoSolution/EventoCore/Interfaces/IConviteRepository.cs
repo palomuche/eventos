@@ -11,5 +11,6 @@ namespace EventoCore.Interfaces
         IEnumerable<Convite> GetByUsuario(string token, Guid usuarioId);
         Convite GetById(string token, Guid id);
         RetornoViewModel ConfirmarConvite(string token, Guid id, bool confirmado);
+        RetornoViewModel EnviarConvite(string token, Guid eventoId, Guid convidadoId);
     }
 }
