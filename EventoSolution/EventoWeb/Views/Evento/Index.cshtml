@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Eventos";
     var eventos = (IEnumerable<Evento>)ViewBag.Eventos;
+    var usuarioId = User.Claims.FirstOrDefault(v => v.Type == "UsuarioId")?.Value;
 }
 
 <style>
@@ -127,7 +128,8 @@
                         <th>Descrição</th>
                         <th>Dt. Início</th>
                         <th>Dt. Fim</th>
-                        <th>Usuário</th>
+                        <th>Organizador</th>
+                        <th>Tipo de Participação</th>
                         <th></th>
                     </tr>
 
@@ -139,6 +141,7 @@
                             <td>@a.Inicio.ToString("dd/MM/yyyy HH:mm")</td>
                             <td>@a.Fim.ToString("dd/MM/yyyy HH:mm")</td>
                             <td>@a.UsuarioInclusao?.Nome</td>
+                            <td>@(a.UsuarioInclusaoId?.ToString() == usuarioId ? "Organizador" : "Convidado")</td>
                             <td class="text-center">
                                 <button class="button-lista">
                                     <i class="fas fa-edit" onclick="edita('@a.Id')"></i>

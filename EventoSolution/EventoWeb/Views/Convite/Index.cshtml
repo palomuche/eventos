@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Convites";
     var convites = (IEnumerable<Convite>)ViewBag.Convites;
+    var usuarioId = User.Claims.FirstOrDefault(v => v.Type == "UsuarioId")?.Value;
 }
 
 <style>
