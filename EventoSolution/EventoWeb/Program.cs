@@ -16,6 +16,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IEventoRepository, EventoRepository>();
+builder.Services.AddScoped<IConviteRepository, ConviteRepository>();
 
 builder.Services.AddDbContext<ApplicationContext>(options =>
 {

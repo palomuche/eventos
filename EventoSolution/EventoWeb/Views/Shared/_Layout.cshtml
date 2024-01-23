@@ -147,6 +147,11 @@
                             <i class="fas fa-calendar icone-sidebar"></i><div>Eventos</div>
                         </div>
                     </a>
+                    <a href="@(Url.Action("Index", "Convite"))">
+                        <div class="lista-menu-lateral @((string)ViewBag.Title == "Convites" ? Html.Raw("title-ativo") : Html.Raw(""))">
+                            <i class="fas fa-envelope icone-sidebar"></i><div>Convites</div>
+                        </div>
+                    </a>
                 </div>
                 <div>
                     <div class="lista-menu-lateral">

@@ -1,5 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json.Linq;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Net.NetworkInformation;
+using System.Reflection;
 
 namespace EventoCore.Entities
 {
@@ -18,9 +22,24 @@ namespace EventoCore.Entities
 
         public enum StatusConvite
         {
+            [Description("Pendente")]
             Pendente = 0,
+            [Description("Aceito")]
             Aceito = 1,
+            [Description("Recusado")]
             Recusado = 2,
+        }
+
+        [NotMapped]
+        public string StatusDescricao
+        {
+            get
+            {
+                var field = typeof(StatusConvite).GetField(Status.ToString());
+                var attribute = (DescriptionAttribute)Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute));
+
+                return attribute == null ? Status.ToString() : attribute.Description;
+            }
         }
     }
 }
