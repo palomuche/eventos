@@ -9,6 +9,7 @@ namespace EventoCore.Context
     {
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Evento> Eventos { get; set; }
+        public DbSet<Convite> Convites { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
