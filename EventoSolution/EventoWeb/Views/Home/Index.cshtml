@@ -1,123 +1,146 @@
 ﻿@{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "Calendário";
+    var eventos = (IEnumerable<Evento>)ViewBag.Eventos;
+    var anoAtual = DateTime.Now.Year;
+    var mesAtual = DateTime.Now.Month;
+    var diasDoMes = DateTime.DaysInMonth(anoAtual, mesAtual);
+    var primeiroDia = new DateTime(anoAtual, mesAtual, 1);
+    var diaDaSemana = (int)primeiroDia.DayOfWeek;
+    var ultimoDia = primeiroDia.AddDays(diasDoMes - 1);
 }
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8"/>
-<title>Sistema</title>
 
 <style>
 
-    body{
-        background-color: #F9F9F9;
-            margin: 0px;
+    .body-calendar {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        background-color: #f4f4f4;
     }
+
+    .calendar {
+        /* max-width: 800px; */
+        background: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .month {
+        text-align: center;
+        padding: 20px 0;
+        background-color: #fd9a47;
+        color: #666;
+        font-weight: bold;
+        font: bold 20px arial, verdana, helvetica, sans-serif;
+    }
+
+        .month ul {
+            padding: 0;
+            margin: 0;
+        }
+
+    .weekdays, .days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+    }
+
+        .day, .weekdays div {
+            min-height: 100px;
+            padding: 5px;
+            box-sizing: border-box;
+            border-right: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+        }
+
+            .day .date {
+                color: #666;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+
+
+            .day:nth-child(7n) {
+                border-right: none;
+            }
+
+        .weekdays div {
+            text-align: center;
+            min-height: 20px;
+            padding: 10px;
+            color: #666;
+            background-color: #ddd;
+            border-right: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            font-weight: bold;
+            line-height: 20px;
+        }
+
+
+    .event {
+        display: block;
+        background-color: #9165e3;
+        color: white;
+        text-align: left;
+        margin-top: 2px;
+        padding: 2px;
+        border-radius: 3px;
+        font-size: 0.75em;
+    }
+
     .titulo {
         color: #9165e3;
+        width: 80%;
         font: bold 20px arial, verdana, helvetica, sans-serif;
     }
+</style>
+<div class="body-calendar">
 
-    .titulo-componentes{
-        color: #9165e3;
-        font: bold 15px arial, verdana, helvetica, sans-serif;
-        padding: 1rem 0rem 1rem 1rem
-    }
+    <div class="calendar">
+        <!-- Cabeçalho do Calendário -->
+        <div class="month">
+            <ul>
+                <div>CALENDÁRIO</div>
+                <div>@DateTime.Now.ToString("MMMM yyyy")</div>
+            </ul>
+        </div>
 
-    .componente1{
-       background-color: white;
-        width: 52%;
-        height: fit-content;
-        border-radius: 15px;
-    }
-    .componente2{
-        background-color: white;
-        width: 100%;
-        height:45%;
-        border-radius: 15px;
-    }
+        <!-- Dias da semana -->
+        <div class="weekdays">
+            <div>Domingo</div>
+            <div>Segunda</div>
+            <div>Terça</div>
+            <div>Quarta</div>
+            <div>Quinta</div>
+            <div>Sexta</div>
+            <div>Sábado</div>
+        </div>
 
-    .componente3{
-        background-color: white;
-        width: 38%;
-        height: fit-content;
-        border-radius: 15px;
-    }
+        <!-- Dias -->
+        <div class="days">
+            @for (int i = 0; i < diaDaSemana; i++)
+            {
+                <div class="day empty"></div>
+            }
 
-    .componente4{
-        background-color: white;
-        width: 70%;
-        height: fit-content%;
-        border-radius: 15px;
-    }
+            @for (var dia = primeiroDia; dia <= ultimoDia; dia = dia.AddDays(1))
+            {
+                var eventosDoDia = eventos.Where(e => e.Inicio.Date <= dia.Date && e.Fim.Date >= dia.Date).OrderBy(e => e.Inicio);
 
-    .flex {
-        display: flex;
-        column-gap: 1rem;
-    }
-
-    .estruturaComponente{
-         width: 15%;
-         row-gap: 2rem
-    }
-
-    .margin1{
-        margin-top: 1rem
-    }
-
-    .img-grafico1{
-        width: 99%
-    }
-    .conteudo-componentes{
-        color: #9165e3;
-        font: bold 20px arial, verdana, helvetica, sans-serif;
-        padding: 1rem 0rem 1.5rem 1rem
-    }
-    .paddi{
-          padding: 0rem 1rem 0 1rem
-    }
-    .paddi-left{
-          padding-left: 1rem
-    }
-    .img-star{
-        width: 12%
-    }
-
-    .breadcrumb{
-         color: #9165e3;
-         background-color: transparent !important;
-         font: bold 10px arial, verdana, helvetica, sans-serif;
-    }
-
-    .flax-r{
-        display: flex;
-        width: 100%;
-        justify-content: right;
-    }
-
-    .estrutura{
-        padding: 1rem
-    }
-
-    .container {
-        max-width: 1500px !important;
-    }
- </style>
-
-</head>
-<body>
-    <div class= "componenteLogar">
-    <div class="flex estrutura">
-         <div  class="titulo">DASHBOARD</div>
-         <div class="flax-r">
-             <div  class="breadcrumb-cop">Meu Usuário </div>
-         </div>
-    </div>
-
-    <div class="estrutura">
-    </div>
+                <div class="day">
+                    <div class="date">@dia.Day</div>
+                    <div class="eventos">
+                        @foreach (var evento in eventosDoDia)
+                        {
+                            <div class="event">@evento.Inicio.ToString("HH:mm") - @evento.Titulo</div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
 
     </div>
-</body>
-</html>
+</div>

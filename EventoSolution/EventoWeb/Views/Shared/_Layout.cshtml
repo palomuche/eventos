@@ -102,7 +102,7 @@
         }
 
         .title-ativo {
-            border-left: 5px solid #FFC2B4;
+            border-left: 5px solid #9165e3;
         }
 
         .icone-sidebar {
@@ -138,8 +138,8 @@
                         <img style="height:3rem" src="~/img/LOGO_TOP.png" />
                     </div>
                     <a href="@(Url.Action("Index", "Home"))">
-                        <div class="lista-menu-lateral @((string)ViewBag.Title == "Home" ? Html.Raw("title-ativo") : Html.Raw(""))">
-                            <i class="fas fa-user icone-sidebar"></i> <div>Dashboard</div>
+                        <div class="lista-menu-lateral @((string)ViewBag.Title == "Calendário" ? Html.Raw("title-ativo") : Html.Raw(""))">
+                            <i class="fas fa-user icone-sidebar"></i> <div>Calendário</div>
                         </div>
                     </a>
                     <a href="@(Url.Action("Index", "Evento"))">
