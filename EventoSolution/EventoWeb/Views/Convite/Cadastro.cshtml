@@ -1,8 +1,4 @@
-﻿@using EventoCore.Entities
-@{
-    var evento = (Evento)ViewBag.Evento;
-}
-
+﻿
 <style>
 
     .body-cadastro {
@@ -85,14 +81,14 @@
 
 <div class="body-cadastro">
     <div class="cadastro">
-        <h1 class="titulo-cadastro">Cadastro de Evento</h1>
+        <h1 class="titulo-cadastro">Enviar Convite</h1>
         <div class="pading">
             <div id="erro" class="d-none"></div>
-            <div class="margin input top"><input id="inputTitulo" type="text" placeholder="Digite o título" value="@evento?.Titulo"></div>
-            <div class="margin input top"><textarea id="inputDescricao" placeholder="Digite a descrição">@evento?.Descricao</textarea></div>
-            <div class="margin input top"><input id="inputInicio" type="datetime-local" value="@evento?.Inicio.ToString("yyyy-MM-ddTHH:mm")"></div>
-            <div class="margin input top"><input id="inputFim" type="datetime-local" value="@evento?.Fim.ToString("yyyy-MM-ddTHH:mm")"></div>
-            <div class="margin left2 top1 text-center"><button class="button-cadastro" type="submit" onclick="cadastrarEvento()">SALVAR</button></div>
+            <div class="margin input top"><input id="inputTitulo" type="text" placeholder="Digite o título" ></div>
+            <div class="margin input top"><textarea id="inputDescricao" placeholder="Digite a descrição"></textarea></div>
+            <div class="margin input top"><input id="inputInicio" type="datetime-local"></div>
+            <div class="margin input top"><input id="inputFim" type="datetime-local"></div>
+            <div class="margin left2 top1 text-center"><button class="button-cadastro">SALVAR</button></div>
         </div>
     </div>
 </div>
@@ -120,8 +116,6 @@
                 Descricao: descricao,
                 Inicio: inicio,
                 Fim: fim,
-                UsuarioId: '@evento?.UsuarioInclusaoId',
-                Id: '@evento?.Id',
             },
             success: function (data) {
                 if (data.sucesso) {

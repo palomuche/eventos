@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var nomeUsuario = User.Claims.FirstOrDefault(v => v.Type == "Nome")?.Value;
+
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -52,7 +57,9 @@
             grid-area: conteudo;
             width: 100%;
             overflow-y:auto;
-            max-height:100vh;
+            max-height: 100vh;
+            display: flex; 
+            flex-direction: column;
         }
 
         .menu-lateral {
@@ -126,6 +133,14 @@
 
         }
 
+        .header {
+            text-align: right;
+            padding: 20px;
+            background-color: #fd9a47;
+            color: #9165e3;
+            font: bold 20px arial, verdana, helvetica, sans-serif;
+        }
+
     </style>
 
 </head>
@@ -139,12 +154,12 @@
                     </div>
                     <a href="@(Url.Action("Index", "Home"))">
                         <div class="lista-menu-lateral @((string)ViewBag.Title == "Calendário" ? Html.Raw("title-ativo") : Html.Raw(""))">
-                            <i class="fas fa-user icone-sidebar"></i> <div>Calendário</div>
+                            <i class="fas fa-calendar icone-sidebar"></i> <div>Calendário</div>
                         </div>
                     </a>
                     <a href="@(Url.Action("Index", "Evento"))">
                         <div class="lista-menu-lateral @((string)ViewBag.Title == "Eventos" ? Html.Raw("title-ativo") : Html.Raw(""))">
-                            <i class="fas fa-calendar icone-sidebar"></i><div>Eventos</div>
+                            <i class="fas fa-list icone-sidebar"></i><div>Eventos</div>
                         </div>
                     </a>
                     <a href="@(Url.Action("Index", "Convite"))">
@@ -161,6 +176,7 @@
             </div>
         </div>
         <div class="conteudo">
+            <div class="header"><i class="fas fa-user"> </i>@($" {nomeUsuario}")</div>
             <main role="main" class="pb-3">
                 @RenderBody()
             </main>
