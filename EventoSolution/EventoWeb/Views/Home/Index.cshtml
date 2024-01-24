@@ -25,15 +25,18 @@
         /* max-width: 800px; */
         background: white;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
     }
 
     .month {
         text-align: center;
         padding: 20px 0;
         background-color: #fd9a47;
-        color: #666;
+        color: white;
         font-weight: bold;
         font: bold 20px arial, verdana, helvetica, sans-serif;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
     }
 
         .month ul {
@@ -104,7 +107,7 @@
         <div class="month">
             <ul>
                 <div>CALENDÁRIO</div>
-                <div>@DateTime.Now.ToString("MMMM yyyy")</div>
+                <div style="font-size: medium">@DateTime.Now.ToString("MMMM yyyy").ToUpper()</div>
             </ul>
         </div>
 

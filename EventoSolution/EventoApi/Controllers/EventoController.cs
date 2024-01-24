@@ -180,11 +180,9 @@ namespace EventoApi.Controllers
 
                 if(evento.UsuarioInclusaoId != null)
                 {
-                    var concomitante = _context.Eventos
-                                        .Any(w => !w.Excluido 
-                                             && w.UsuarioInclusaoId != null 
-                                             && w.UsuarioInclusaoId == evento.UsuarioInclusaoId
-                                             && w.Id != evento.Id
+                    var eventos = GetEventoByUsuario((Guid)evento.UsuarioInclusaoId).Result.Value;
+                    var concomitante = eventos
+                                        .Any(w => w.Id != evento.Id
                                              && (
                                                    //data inicio entre o inicio e fim
                                                    (w.Inicio <= evento.Inicio && evento.Inicio <= w.Fim)

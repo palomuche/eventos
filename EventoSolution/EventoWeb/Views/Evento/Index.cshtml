@@ -143,15 +143,18 @@
                             <td>@a.UsuarioInclusao?.Nome</td>
                             <td>@(a.UsuarioInclusaoId?.ToString() == usuarioId ? "Organizador" : "Convidado")</td>
                             <td class="text-center">
-                                <button class="button-lista">
-                                    <i class="fas fa-edit" onclick="edita('@a.Id')"></i>
-                                </button>
-                                <button class="button-lista">
-                                    <i class="fas fa-trash" onclick="exclui('@a.Id')"></i>
-                                </button>
-                                <button class="button-lista">
-                                    <i class="fas fa-user-plus" onclick="convidarUsuario('@a.Id')"></i>
-                                </button>
+                                @if(a.UsuarioInclusaoId?.ToString() == usuarioId)
+                                {
+                                    <button class="button-lista">
+                                        <i class="fas fa-edit" onclick="edita('@a.Id')"></i>
+                                    </button>
+                                    <button class="button-lista">
+                                        <i class="fas fa-trash" onclick="exclui('@a.Id')"></i>
+                                    </button>
+                                    <button class="button-lista">
+                                        <i class="fas fa-user-plus" onclick="convidarUsuario('@a.Id')"></i>
+                                    </button>                                    
+                                }
                             </td>
                         </tr>
                     }

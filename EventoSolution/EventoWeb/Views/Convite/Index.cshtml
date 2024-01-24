@@ -140,12 +140,15 @@
                             <td>@a.Evento.Fim.ToString("dd/MM/yyyy HH:mm")</td>
                             <td>@a.Evento.UsuarioInclusao?.Nome</td>
                             <td class="text-center">
-                                <button class="button-lista" style="display: @((a.Status == Convite.StatusConvite.Pendente) ? "block" : "none")">
-                                    <i class="fas fa-check" onclick="aceita('@a.Id')"></i>
-                                </button>
-                                <button class="button-lista" style="display: @((a.Status == Convite.StatusConvite.Pendente) ? "block" : "none")">
-                                    <i class="fas fa-times" onclick="recusa('@a.Id')"></i>
-                                </button>
+                                @if (a.Status == Convite.StatusConvite.Pendente)
+                                {
+                                    <button class="button-lista">
+                                        <i class="fas fa-check" onclick="aceita('@a.Id')"></i>
+                                    </button>
+                                    <button class="button-lista">
+                                        <i class="fas fa-times" onclick="recusa('@a.Id')"></i>
+                                    </button>                                    
+                                }
                             </td>
                         </tr>
                     }

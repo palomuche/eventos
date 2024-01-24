@@ -95,7 +95,7 @@
             <div class="margin input top">Fim: @evento?.Fim.ToString("dd/MM/yyyy HH:mm")</div><div>
                 <select id="selectUsuario" name="usuarioId">
                     <option value="" disabled selected>Selecione um usuário</option>
-                    @foreach (var usuario in usuarios)
+                    @foreach (var usuario in usuarios.Where(u => u.Id != evento.UsuarioInclusaoId))
                     {
                         <option value="@usuario.Id">@usuario.Nome</option>
                     }
